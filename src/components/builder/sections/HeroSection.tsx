@@ -22,14 +22,16 @@ export const HeroSection = ({
       {isEditing ? (
         <div className="space-y-4">
           <EnhancedTextEditor
-            value={content.heroTitle || 'Welcome'}
+            value={content.heroTitle }
+            placeholder="Title here"
             onChange={(value) => onContentChange('heroTitle', value)}
             onStyleChange={(style) => onStyleChange('heroTitle', style)}
           />
           <EnhancedTextEditor
-            value={content.heroSubtitle || 'Subtitle here'}
+            value={content.heroSubtitle}
             onChange={(value) => onContentChange('heroSubtitle', value)}
             onStyleChange={(style) => onStyleChange('heroSubtitle', style)}
+            placeholder='Subtitle here'
             multiline
           />
           <Input

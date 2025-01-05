@@ -9,9 +9,10 @@ interface EnhancedTextEditorProps {
   onChange: (value: string) => void;
   onStyleChange: (style: any) => void;
   multiline?: boolean;
+  placeholder:string
 }
 
-export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline = false }: EnhancedTextEditorProps) => {
+export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline = false,placeholder="default placeholder" }: EnhancedTextEditorProps) => {
   const [color, setColor] = React.useState('#000000');
 
   const handleColorChange = (color: any) => {
@@ -59,13 +60,15 @@ export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline =
       {multiline ? (
         <Textarea
           value={value}
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className="w-full min-h-[100px]"
+          className="w-full min-h-[100px] "
         />
       ) : (
         <Input
           type="text"
           value={value}
+          placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
           className="w-full"
         />
