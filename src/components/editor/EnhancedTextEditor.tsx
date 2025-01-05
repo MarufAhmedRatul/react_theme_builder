@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { ChromePicker } from 'react-color';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { ButtonSizeDropdown } from '../ui/btn-size-dropdown';
 
 interface EnhancedTextEditorProps {
   value: string;
@@ -94,6 +95,7 @@ export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline =
           </PopoverContent>
         </Popover>
         }
+        <ButtonSizeDropdown></ButtonSizeDropdown>
       </div>
       {multiline ? (
         <Textarea
