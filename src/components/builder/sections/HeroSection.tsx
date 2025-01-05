@@ -51,6 +51,8 @@ export const HeroSection = ({
             onChange={(e) => onContentChange('heroButtonUrl', e.target.value)}
           />
           <EnhancedTextEditor
+          styles={styles}
+          componentName='heroButtonText'
             value={content.heroButtonText || 'Learn More'}
             onChange={(value) => onContentChange('heroButtonText', value)}
             onStyleChange={(style) => onStyleChange('heroButtonText', style)}

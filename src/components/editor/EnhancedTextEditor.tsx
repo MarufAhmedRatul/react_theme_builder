@@ -9,7 +9,7 @@ interface EnhancedTextEditorProps {
   onChange: (value: string) => void;
   onStyleChange: (style: any) => void;
   multiline?: boolean;
-  placeholder:string;
+  placeholder?:string;
   styles:Record<string, any>;
   componentName:string;
 }
@@ -17,11 +17,17 @@ interface EnhancedTextEditorProps {
 export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline = false,placeholder="default placeholder",styles, componentName }: EnhancedTextEditorProps) => {
   console.log(styles);
   const [color, setColor] = React.useState(styles?.[componentName]?.color || {});
+  const [btnColor, setBtnColor] = React.useState(styles?.[componentName]?.["background-color"] || {});
 
   const handleColorChange = (color: any) => {
     setColor(color.hex);
     onStyleChange({ color: color.hex });
   };
+  const handleBtnColorChange= (color: any) => {
+    setBtnColor(color.hex);
+    onStyleChange({ "background-color": color.hex });
+  };
+  console.log(styles);
 
   return (
     <div className="space-y-2">
@@ -59,6 +65,35 @@ export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline =
             />
           </PopoverContent>
         </Popover>
+        {componentName==="heroButtonText"&&
+        <Popover>
+          <PopoverTrigger asChild>
+            <button
+              type="button"
+              className="px-3 py-1 border rounded flex items-center gap-2"
+            >
+              <div 
+                className="w-4 h-4 rounded-sm border"
+                style={{ backgroundColor: btnColor }} 
+              />
+              Button Color
+            </button>
+          </PopoverTrigger>
+          <PopoverContent className="p-0 border-none">
+            <ChromePicker 
+              color={btnColor} 
+              onChange={handleBtnColorChange}
+              styles={{
+                default: {
+                  picker: {
+                    boxShadow: 'none',
+                  }
+                }
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+        }
       </div>
       {multiline ? (
         <Textarea
