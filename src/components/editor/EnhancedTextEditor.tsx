@@ -9,11 +9,14 @@ interface EnhancedTextEditorProps {
   onChange: (value: string) => void;
   onStyleChange: (style: any) => void;
   multiline?: boolean;
-  placeholder:string
+  placeholder:string;
+  styles:Record<string, any>;
+  componentName:string;
 }
 
-export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline = false,placeholder="default placeholder" }: EnhancedTextEditorProps) => {
-  const [color, setColor] = React.useState('#000000');
+export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline = false,placeholder="default placeholder",styles, componentName }: EnhancedTextEditorProps) => {
+  console.log(styles);
+  const [color, setColor] = React.useState(styles?.[componentName]?.color || {});
 
   const handleColorChange = (color: any) => {
     setColor(color.hex);

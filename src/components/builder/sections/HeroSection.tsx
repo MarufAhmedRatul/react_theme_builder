@@ -22,12 +22,16 @@ export const HeroSection = ({
       {isEditing ? (
         <div className="space-y-4">
           <EnhancedTextEditor
+            styles={styles}
+            componentName='heroTitle'
             value={content.heroTitle }
             placeholder="Title here"
             onChange={(value) => onContentChange('heroTitle', value)}
             onStyleChange={(style) => onStyleChange('heroTitle', style)}
           />
           <EnhancedTextEditor
+          styles={styles}
+          componentName='heroSubtitle'
             value={content.heroSubtitle}
             onChange={(value) => onContentChange('heroSubtitle', value)}
             onStyleChange={(style) => onStyleChange('heroSubtitle', style)}
@@ -69,7 +73,7 @@ export const HeroSection = ({
             {content.heroSubtitle || 'Subtitle here'}
           </p>
           <a href={content.heroButtonUrl || '#'}>
-            <Button style={styles.heroButtonText || {}}>
+            <Button  style={styles.heroButtonText || {}}>
               {content.heroButtonText || 'Learn More'}
             </Button>
           </a>
