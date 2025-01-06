@@ -18,7 +18,9 @@ export const HeroSection = ({
   onContentChange,
   onStyleChange,
 }: HeroSectionProps) => {
-
+  console.log(styles.heroButtonTextShadCN);
+  const testProp={size:""}
+  console.log(content.heroSubtitle);
   // const sanitizeHTML = (html: string) => {
   //   return {
   //     __html: DOMPurify.sanitize(html)
@@ -63,6 +65,7 @@ export const HeroSection = ({
             value={content.heroButtonText || 'Learn More'}
             onChange={(value) => onContentChange('heroButtonText', value)}
             onStyleChange={(style) => onStyleChange('heroButtonText', style)}
+            onShadCNPropChange={(prop) => onStyleChange('heroButtonTextShadCN', prop)}
           />
         </div>
       ) : (
@@ -84,7 +87,8 @@ export const HeroSection = ({
             dangerouslySetInnerHTML={{__html:content.heroSubtitle}}
           />
           <a href={content.heroButtonUrl || '#'}>
-            <Button  style={styles.heroButtonText || {}}>
+
+            <Button {...styles.heroButtonTextShadCN}   style={styles.heroButtonText || {}}>
               {content.heroButtonText || 'Learn More'}
             </Button>
           </a>

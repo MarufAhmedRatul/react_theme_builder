@@ -10,11 +10,22 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
+interface ButtonSizeDropdownProps {
+  initialSize?: ButtonSize;
+  onChange?: (size: ButtonSize) => void;
+}
+
 const buttonSizes = ['default', 'sm', 'lg', 'icon'] as const
 type ButtonSize = typeof buttonSizes[number]
 
-export function ButtonSizeDropdown() {
-  const [selectedSize, setSelectedSize] = React.useState<ButtonSize>('default')
+export function ButtonSizeDropdown({ initialSize = 'default', onChange }: ButtonSizeDropdownProps)  {
+  console.log('initialsize',initialSize);
+  const [selectedSize, setSelectedSize] = React.useState<ButtonSize>(initialSize)
+  const handleBtnSizeChange=(size:ButtonSize)=>{
+    setSelectedSize(size)
+    onChange(size)
+
+  }
 
   return (
     <DropdownMenu>
@@ -28,7 +39,7 @@ export function ButtonSizeDropdown() {
         {buttonSizes.map((size) => (
           <DropdownMenuItem
             key={size}
-            onSelect={() => setSelectedSize(size)}
+            onSelect={() => handleBtnSizeChange(size)}
           >
             {size}
           </DropdownMenuItem>

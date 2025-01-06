@@ -25,7 +25,17 @@ export const TipTapEditor2 = ({ value, onChange }: TipTapEditorProps) => {
   return (
     <div className="border rounded-md p-2">
       <div className="mb-2">
-        <button onClick={() => editor.chain().focus().toggleBold().run()} className="mr-2">
+        <button
+          onClick={() => editor.chain().focus().toggleBold().run()}
+          disabled={
+            !editor.can()
+              .chain()
+              .focus()
+              .toggleBold()
+              .run()
+          }
+          className={editor.isActive('bold') ? 'is-active mr-2' : 'mr-2'}
+        >
           Bold
         </button>
         <button onClick={() => editor.chain().focus().toggleItalic().run()} className="mr-2">
@@ -47,7 +57,8 @@ export const TipTapEditor2 = ({ value, onChange }: TipTapEditorProps) => {
           Ordered List
         </button>
       </div>
-      <EditorContent editor={editor} className="prose prose-sm max-w-none min-h-[100px]" />
+      <EditorContent editor={editor} 
+      className="prose prose-sm max-w-none min-h-[100px] bg-green-100" />
     </div>
   );
 };

@@ -53,9 +53,6 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
   };
 
   const handleStyleChange = (key: string, value: any) => {
-    console.log('key is ',key);
-    console.log('value is ',value);
-    console.log('style is',styles);
     
     setStyles((prev) => ({ ...prev, [key]: {
       ...(prev[key] || {}), 
