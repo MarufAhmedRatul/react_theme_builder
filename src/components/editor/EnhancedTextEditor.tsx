@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { ChromePicker } from 'react-color';
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { ButtonSizeDropdown } from '../ui/btn-size-dropdown';
+import { TipTapEditor2 } from './TipTapEditor2';
 
 interface EnhancedTextEditorProps {
   value: string;
@@ -95,15 +96,22 @@ export const EnhancedTextEditor = ({ value, onChange, onStyleChange, multiline =
           </PopoverContent>
         </Popover>
         }
+        {componentName==="heroButtonText"&&
         <ButtonSizeDropdown></ButtonSizeDropdown>
+        }
       </div>
       {multiline ? (
-        <Textarea
-          value={value}
-          placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
-          className="w-full min-h-[100px] "
-        />
+        // <Textarea
+        //   value={value}
+        //   placeholder={placeholder}
+        //   onChange={(e) => onChange(e.target.value)}
+        //   className="w-full min-h-[100px] "
+        // />
+        <TipTapEditor2
+        value={value}
+        onChange={onChange}
+        // placeholder={placeholder} // Pass the placeholder prop
+      />
       ) : (
         <Input
           type="text"

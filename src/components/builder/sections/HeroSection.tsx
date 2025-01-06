@@ -1,6 +1,7 @@
 import { EnhancedTextEditor } from '../../editor/EnhancedTextEditor';
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+// import DOMPurify from 'dompurify';
 
 interface HeroSectionProps {
   content: Record<string, string>;
@@ -17,6 +18,12 @@ export const HeroSection = ({
   onContentChange,
   onStyleChange,
 }: HeroSectionProps) => {
+
+  // const sanitizeHTML = (html: string) => {
+  //   return {
+  //     __html: DOMPurify.sanitize(html)
+  //   }
+  // };
   return (
     <div className="bg-white p-8" style={styles.background || {}}>
       {isEditing ? (
@@ -71,9 +78,11 @@ export const HeroSection = ({
           <h1 className="text-4xl font-bold mb-4" style={styles.heroTitle || {}}>
             {content.heroTitle || 'Welcome'}
           </h1>
-          <p className="text-xl mb-8" style={styles.heroSubtitle || {}}>
-            {content.heroSubtitle || 'Subtitle here'}
-          </p>
+          <p 
+            className="text-xl mb-8" 
+            style={styles.heroSubtitle || {}}
+            dangerouslySetInnerHTML={{__html:content.heroSubtitle}}
+          />
           <a href={content.heroButtonUrl || '#'}>
             <Button  style={styles.heroButtonText || {}}>
               {content.heroButtonText || 'Learn More'}
