@@ -1,4 +1,10 @@
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { StyleOption } from "./styleTypes";
 
 interface StylePickerDialogProps {
@@ -30,7 +36,7 @@ export const StylePickerDialog = ({
             <button
               key={style.id}
               className={`p-4 border rounded-lg hover:border-primary transition-colors ${
-                currentStyle === style.id ? 'border-primary' : 'border-gray-200'
+                currentStyle === style.id ? "border-primary" : "border-gray-200"
               }`}
               onClick={() => onStyleSelect(style.id)}
             >

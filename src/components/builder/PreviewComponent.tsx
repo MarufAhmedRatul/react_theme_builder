@@ -1,15 +1,15 @@
-import { ComponentType } from '@/pages/Index';
-import { X, GripVertical } from 'lucide-react';
-import { useRef, useState } from 'react';
-import { useDrag, useDrop } from 'react-dnd';
 import { Button } from "@/components/ui/button";
-import { HeaderSection } from './sections/HeaderSection';
-import { HeroSection } from './sections/HeroSection';
-import { GridSection } from './sections/GridSection';
-import { ServicesSection } from './sections/ServicesSection';
-import { FooterSection } from './sections/FooterSection';
-import { StylePickerDialog } from './styles/StylePickerDialog';
-import { componentStyles } from './styles/styleTypes';
+import { ComponentType } from "@/pages/Index";
+import { GripVertical, X } from "lucide-react";
+import { useRef, useState } from "react";
+import { useDrag, useDrop } from "react-dnd";
+import { FooterSection } from "./sections/FooterSection";
+import { GridSection } from "./sections/GridSection";
+import { HeaderSection } from "./sections/HeaderSection";
+import { HeroSection } from "./sections/HeroSection";
+import { ServicesSection } from "./sections/ServicesSection";
+import { StylePickerDialog } from "./styles/StylePickerDialog";
+import { componentStyles } from "./styles/styleTypes";
 
 interface PreviewComponentProps {
   component: ComponentType;
@@ -18,15 +18,24 @@ interface PreviewComponentProps {
   onReorder: (dragIndex: number, hoverIndex: number) => void;
 }
 
-export const PreviewComponent = ({ component, index, onRemove, onReorder }: PreviewComponentProps) => {
+export const PreviewComponent = ({
+  component,
+  index,
+  onRemove,
+  onReorder,
+}: PreviewComponentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [content, setContent] = useState(component.content || {});
   const [styles, setStyles] = useState<Record<string, any>>({});
   const [showStylePicker, setShowStylePicker] = useState(!content.style);
   const ref = useRef<HTMLDivElement>(null);
 
+  // useEffect(() => {
+  //   console.log(styles);
+  // }, [styles]);
+
   const [{ isDragging }, drag] = useDrag({
-    type: 'reorder',
+    type: "reorder",
     item: { index },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
@@ -34,7 +43,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
   });
 
   const [, drop] = useDrop({
-    accept: 'reorder',
+    accept: "reorder",
     hover: (item: { index: number }) => {
       if (!ref.current) return;
       const dragIndex = item.index;
@@ -64,7 +73,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
 
   const renderComponent = () => {
     switch (component.type) {
-      case 'header':
+      case "header":
         return (
           <HeaderSection
             content={content}
@@ -74,7 +83,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
             onStyleChange={handleStyleChange}
           />
         );
-      case 'hero':
+      case "hero":
         return (
           <HeroSection
             content={content}
@@ -84,7 +93,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
             onStyleChange={handleStyleChange}
           />
         );
-      case 'grid':
+      case "grid":
         return (
           <GridSection
             content={content}
@@ -94,7 +103,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
             onStyleChange={handleStyleChange}
           />
         );
-      case 'services':
+      case "services":
         return (
           <ServicesSection
             content={content}
@@ -104,7 +113,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
             onStyleChange={handleStyleChange}
           />
         );
-      case 'footer':
+      case "footer":
         return (
           <FooterSection
             content={content}
@@ -129,7 +138,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
         open={showStylePicker}
         onOpenChange={setShowStylePicker}
         options={componentStyles[component.type] || []}
-        currentStyle={content.style || ''}
+        currentStyle={content.style || ""}
         onStyleSelect={handleStyleSelect}
       />
       <div className="absolute top-2 right-2 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity z-10">
@@ -138,7 +147,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
           size="sm"
           onClick={() => setIsEditing(!isEditing)}
         >
-          {isEditing ? '✓' : '✎'}
+          {isEditing ? "✓" : "✎"}
         </Button>
         <Button
           variant="outline"

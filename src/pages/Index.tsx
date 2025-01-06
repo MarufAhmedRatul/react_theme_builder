@@ -1,33 +1,41 @@
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { ComponentSidebar } from '@/components/builder/ComponentSidebar';
-import { BuilderCanvas } from '@/components/builder/BuilderCanvas';
-import { useState } from 'react';
-import { useToast } from '@/hooks/use-toast';
+import { BuilderCanvas } from "@/components/builder/BuilderCanvas";
+import { ComponentSidebar } from "@/components/builder/ComponentSidebar";
+import { useToast } from "@/hooks/use-toast";
+import { useEffect, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 export type ComponentType = {
   id: string;
-  type: 'header' | 'hero' | 'grid' | 'services' | 'footer';
+  type: "header" | "hero" | "grid" | "services" | "footer";
   content?: Record<string, string>;
 };
 
 const Index = () => {
   const [components, setComponents] = useState<ComponentType[]>([]);
+  useEffect(() => {
+    console.log(components);
+  }, [components]);
   const { toast } = useToast();
 
   const handleDrop = (item: ComponentType) => {
-    setComponents((prev) => [...prev, { ...item, id: Math.random().toString() }]);
+    setComponents((prev) => [
+      ...prev,
+      { ...item, id: Math.random().toString() },
+    ]);
+
     toast({
       title: "Success",
-      description: "Component added successfully!"
+      description: "Component added successfully!",
     });
   };
 
   const handleRemove = (id: string) => {
     setComponents((prev) => prev.filter((comp) => comp.id !== id));
+
     toast({
       title: "Success",
-      description: "Component removed successfully!"
+      description: "Component removed successfully!",
     });
   };
 
@@ -37,6 +45,7 @@ const Index = () => {
       const draggedItem = newComponents[dragIndex];
       newComponents.splice(dragIndex, 1);
       newComponents.splice(hoverIndex, 0, draggedItem);
+
       return newComponents;
     });
   };
