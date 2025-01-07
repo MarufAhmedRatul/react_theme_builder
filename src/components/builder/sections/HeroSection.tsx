@@ -21,11 +21,7 @@ export const HeroSection = ({
   console.log(styles.heroButtonTextShadCN);
   const testProp={size:""}
   console.log(content.heroSubtitle);
-  // const sanitizeHTML = (html: string) => {
-  //   return {
-  //     __html: DOMPurify.sanitize(html)
-  //   }
-  // };
+
   return (
     <div className="bg-white p-8" style={styles.background || {}}>
       {isEditing ? (

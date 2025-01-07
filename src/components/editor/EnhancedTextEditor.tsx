@@ -1,6 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { ChromePicker } from "react-color";
 import {
   Popover,
@@ -8,17 +6,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { ButtonSizeDropdown } from "../ui/btn-size-dropdown";
-import { TipTapEditor2 } from "./TipTapEditor2";
-import StarterKit from "@tiptap/starter-kit";
-const extensions = [StarterKit];
-import {
-  EditorProvider,
-  FloatingMenu,
-  BubbleMenu,
-  useEditor,
-  EditorContent,
-} from "@tiptap/react";
-import { ListOrdered } from "lucide-react";
+import TipTapEditorFloating from "./TipTapEditorFloating";
+import React from "react";
 
 interface EnhancedTextEditorProps {
   value: string;
@@ -62,26 +51,8 @@ export const EnhancedTextEditor = ({
   const handleBtnSizeChange = (size: TBtnSize) => {
     onShadCNPropChange({ size: size });
   };
-  const editor = useEditor({
-    extensions,
-    content: value,
-    onUpdate: ({ editor }) => {
-      onChange(editor.getHTML());
-    },
-    editorProps: {
-      attributes: {
-        class: "prose focus:outline-none max-w-none",
-      },
-    },
-  });
 
-  useEffect(() => {
-    if (editor && editor.getHTML() !== value) {
-      editor.commands.setContent(value);
-    }
-  }, [value, editor]);
 
-  // console.log("ini",styles?.heroButtonTex?.heroButtonTextShadCN);
 
   return (
     <div className='space-y-2'>
@@ -156,69 +127,7 @@ export const EnhancedTextEditor = ({
         )}
       </div>
       {multiline ? (
-        <div className='border rounded-md p-4 min-h-[100px]'>
-          {editor && (
-            <>
-              <FloatingMenu
-                editor={editor}
-                tippyOptions={{ duration: 100 }}
-                className='bg-white shadow-lg border rounded-md p-2 flex gap-2'
-              >
-                <button
-                  className='p-1 hover:bg-gray-100 rounded'
-                  onClick={() => editor.chain().focus().toggleBold().run()}
-                >
-                  Bold
-                </button>
-                <button
-                  className='p-1 hover:bg-gray-100 rounded'
-                  onClick={() => editor.chain().focus().toggleItalic().run()}
-                >
-                  Italic
-                </button>
-                <button
-                  onClick={() =>
-                    editor.chain().focus().toggleOrderedList().run()
-                  }
-                  className={`p-2 rounded hover:bg-gray-100 ${
-                    editor.isActive("orderedList") ? "bg-gray-200" : ""
-                  }`}
-                >
-                  <ListOrdered className='w-4 h-4' />
-                </button>
-              </FloatingMenu>
-              <BubbleMenu
-                editor={editor}
-                tippyOptions={{ duration: 100 }}
-                className='bg-white shadow-lg border rounded-md p-2 flex gap-2'
-              >
-                <button
-                  className='p-1 hover:bg-gray-100 rounded'
-                  onClick={() => editor.chain().focus().toggleBold().run()}
-                >
-                  Bold
-                </button>
-                <button
-                  className='p-1 hover:bg-gray-100 rounded'
-                  onClick={() => editor.chain().focus().toggleItalic().run()}
-                >
-                  Italic
-                </button>
-                <button
-                  onClick={() =>
-                    editor.chain().focus().toggleOrderedList().run()
-                  }
-                  className={`p-2 rounded hover:bg-gray-100 ${
-                    editor.isActive("orderedList") ? "bg-gray-200" : ""
-                  }`}
-                >
-                  <ListOrdered className='w-4 h-4' />
-                </button>
-              </BubbleMenu>
-            </>
-          )}
-          <EditorContent editor={editor} />
-        </div>
+        <TipTapEditorFloating value={value} onChange={onChange}></TipTapEditorFloating>
       ) : (
         <Input
           type='text'
