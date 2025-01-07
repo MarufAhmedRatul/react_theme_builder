@@ -61,7 +61,7 @@ function SplitHero ({isEditing,styles,content,onContentChange,onStyleChange}) {
               </h1>
               <div 
           className="text-xl mb-8 prose prose-slate max-w-none
-            [&>ol]:list-decimal [&>ul]:list-disc
+            [&>ol]:list-decimal [&>ul]:list-disc [&>ul]:ml-8 [&>ol]:ml-8
         "
           style={styles.heroSubtitle || {}}
           dangerouslySetInnerHTML={{__html:content.heroSubtitle||" Streamline your projects, boost productivity, and achieve your goals faster than ever before."}}
