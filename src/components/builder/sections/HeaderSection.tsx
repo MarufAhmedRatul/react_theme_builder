@@ -5,7 +5,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useState } from "react";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+import React, { useEffect, useState } from "react";
 import { TipTapEditor } from "../../editor/TipTapEditor";
 import { MenuItem } from "./MenuItem";
 
@@ -27,24 +32,28 @@ const headerStyles = [
   {
     id: "modern",
     label: "Modern",
+    // className: "",
     className: "bg-gradient-to-r from-blue-500 to-purple-500 text-white",
     preview: "Gradient background with modern styling",
   },
   {
     id: "minimal",
     label: "Minimal",
-    className: "bg-white border-b",
+    // className: "",
+    className: "bg-lime-100 border-b",
     preview: "Minimalistic design with essential elements",
   },
   {
     id: "dark",
     label: "Dark",
+    // className: "",
     className: "bg-gray-800 text-white",
     preview: "Dark theme with contrasting elements",
   },
   {
     id: "transparent",
     label: "Transparent",
+    // className: "",
     className: "bg-transparent backdrop-blur-sm",
     preview: "Transparent background with blur effect",
   },
@@ -58,17 +67,27 @@ export const HeaderSection = ({
   onStyleChange,
 }: HeaderSectionProps) => {
   const [showStylePicker, setShowStylePicker] = useState(!content.headerStyle);
+  const [latestContent, setLatestContent] = useState(content);
   const currentStyle = content.headerStyle || "classic";
+  const [color, setColor] = React.useState("#000000");
   const headerStyle =
     headerStyles.find((style) => style.id === currentStyle) || headerStyles[0];
-  const menuItems = ["Home", "About", "Services", "Contact"];
 
   const handleStyleSelect = (styleId: string) => {
     onContentChange("headerStyle", styleId);
     setShowStylePicker(false);
   };
 
-  const Logo = () => (
+  // const handleColorChange = (color: any) => {
+  //   setColor(color.hex);
+  //   console.log(color);
+  // };
+
+  const layoutHandler = (e: any) => {
+    setLatestContent({ ...latestContent, style: e });
+  };
+
+  const ShowLogo = () => (
     <div className="font-bold">
       {isEditing ? (
         <TipTapEditor
@@ -85,102 +104,65 @@ export const HeaderSection = ({
     </div>
   );
 
-  const MenuItems = () => (
-    <>
-      {menuItems.map((item, i) => (
-        <div key={item}>
-          <MenuItem
-            item={item}
-            index={i}
-            isEditing={isEditing}
-            content={content}
-            onContentChange={onContentChange}
-          />
-        </div>
-      ))}
-    </>
-  );
-
-  const StylePickerButton = () =>
+  const EditHeaderLayout = () =>
     isEditing && (
-      <div className="mb-4">
+      <div className="flex gap-4">
+        {["Center", "Start", "End", "Between"].map((position) => (
+          <Button
+            key={position}
+            variant="outline"
+            onClick={() => layoutHandler(position.toLowerCase())}
+          >
+            {position}
+          </Button>
+        ))}
+      </div>
+    );
+
+  const EditHeaderStyle = () =>
+    isEditing && (
+      <div>
         <Button variant="destructive" onClick={() => setShowStylePicker(true)}>
           Change Header Style
         </Button>
       </div>
     );
 
-  const renderHeader = () => {
-    switch (content.style) {
-      case "modern":
-        return (
-          <nav
-            className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-            style={styles.background || {}}
-          >
-            <StylePickerButton />
-            <Logo />
-            <div className="flex items-center gap-5">
-              <MenuItems />
-            </div>
-          </nav>
-        );
-      case "centered":
-        return (
-          <nav
-            className={`p-6 ${headerStyle.className} flex justify-center gap-5 items-center`}
-            style={styles.background || {}}
-          >
-            <StylePickerButton />
-            <Logo />
-            <div className="flex items-center gap-5">
-              <MenuItems />
-            </div>
-          </nav>
-        );
-      case "minimal":
-        return (
-          <nav
-            className={`p-4 ${headerStyle.className} flex justify-between items-start`}
-            style={styles.background || {}}
-          >
-            <StylePickerButton />
-            <Logo />
-            <div className="flex items-center gap-5 text-sm">
-              <MenuItems />
-            </div>
-          </nav>
-        );
-      case "dark":
-        return (
-          <nav
-            className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-            style={styles.background || {}}
-          >
-            <StylePickerButton />
-            <Logo />
-            <div className="flex items-center gap-5">
-              <MenuItems />
-            </div>
-          </nav>
-        );
-      case "transparent":
-        return (
-          <nav
-            className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-            style={styles.background || {}}
-          >
-            <StylePickerButton />
-            <Logo />
-            <div className="flex items-center gap-5">
-              <MenuItems />
-            </div>
-          </nav>
-        );
-      default:
-        return null;
-    }
-  };
+  // const EditHeaderColor = () =>
+  //   isEditing && (
+  //     <Popover>
+  //       <PopoverTrigger asChild>
+  //         <button
+  //           type="button"
+  //           className="px-3 py-1 border rounded flex items-center gap-2"
+  //         >
+  //           <div
+  //             className="w-4 h-4 rounded-sm border"
+  //             style={{ backgroundColor: color }}
+  //           />
+  //           Color
+  //         </button>
+  //       </PopoverTrigger>
+  //       <PopoverContent className="p-0 border-none">
+  //         <ChromePicker
+  //           color={color}
+  //           onChange={handleColorChange}
+  //           styles={{
+  //             default: {
+  //               picker: {
+  //                 boxShadow: "none",
+  //               },
+  //             },
+  //           }}
+  //         />
+  //       </PopoverContent>
+  //     </Popover>
+  //   );
+
+  useEffect(() => {
+    setLatestContent(content);
+    console.log(content);
+  }, [content]);
 
   return (
     <>
@@ -217,7 +199,31 @@ export const HeaderSection = ({
         </DialogContent>
       </Dialog>
 
-      {renderHeader()}
+      <div className="flex justify-start items-center gap-5 my-4">
+        <EditHeaderStyle />
+        <EditHeaderLayout />
+        {/* <EditHeaderColor /> */}
+      </div>
+      {/* <h1>{color}</h1> */}
+      <nav
+        className={`flex p-5 gap-5 justify-${latestContent.style} bg-[${color}] items-center ${headerStyle.className}`}
+        style={styles.background || {}}
+      >
+        <ShowLogo />
+        <div className="flex gap-6">
+          {["Home", "About", "Services", "Contact"].map((item, i) => (
+            <div key={item}>
+              <MenuItem
+                item={item}
+                index={i}
+                isEditing={isEditing}
+                content={content}
+                onContentChange={onContentChange}
+              />
+            </div>
+          ))}
+        </div>
+      </nav>
     </>
   );
 };

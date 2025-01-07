@@ -31,8 +31,8 @@ export const PreviewComponent = ({
   const ref = useRef<HTMLDivElement>(null);
 
   // useEffect(() => {
-  //   console.log(styles);
-  // }, [styles]);
+  //   console.log(component);
+  // }, [content]);
 
   const [{ isDragging }, drag] = useDrag({
     type: "reorder",
@@ -136,7 +136,6 @@ export const PreviewComponent = ({
     >
       <StylePickerDialog
         open={showStylePicker}
-        // component={component}
         onOpenChange={setShowStylePicker}
         options={componentStyles[component.type] || []}
         currentStyle={content.style || ""}

@@ -23,8 +23,11 @@ export const TipTapEditor = ({ value, onChange }: TipTapEditorProps) => {
   }, [value, editor]);
 
   return (
-    <div className="p-2">
-      <EditorContent editor={editor} className="prose prose-sm max-w-none" />
+    <div className="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-base ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 md:text-sm">
+      <EditorContent
+        editor={editor}
+        className="prose prose-sm max-w-none border-white"
+      />
     </div>
   );
 };

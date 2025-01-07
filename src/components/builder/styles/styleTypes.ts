@@ -16,35 +16,35 @@ export interface ComponentStyles {
 export const componentStyles: ComponentStyles = {
   header: [
     {
-      id: "modern",
-      label: "Modern Header",
+      id: "start",
+      label: "Start Layout",
       description: "Clean and modern design with emphasis on navigation",
       preview: "/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png",
     },
     {
-      id: "minimal",
-      label: "Minimal Header",
+      id: "end",
+      label: "End Layout",
       description: "Simple and elegant with essential elements",
       preview: "/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png",
     },
     {
-      id: "centered",
+      id: "center",
       label: "Centered Layout",
       description: "Centered logo with balanced navigation",
       preview: "/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png",
     },
     {
-      id: "transparent",
-      label: "Transparent Header",
+      id: "between",
+      label: "Between Layout",
       description: "Elegant transparent design with hover effects",
       preview: "/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png",
     },
-    {
-      id: "dark",
-      label: "Dark Theme",
-      description: "Sophisticated dark theme with contrast",
-      preview: "/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png",
-    },
+    // {
+    //   id: 'dark',
+    //   label: 'Dark Theme',
+    //   description: 'Sophisticated dark theme with contrast',
+    //   preview: '/lovable-uploads/b8e6a9bb-f8e5-4c44-8537-0423452c2d76.png'
+    // }
   ],
   hero: [
     {
