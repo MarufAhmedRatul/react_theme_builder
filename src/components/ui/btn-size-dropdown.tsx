@@ -19,7 +19,6 @@ const buttonSizes = ['default', 'sm', 'lg', 'icon'] as const
 type ButtonSize = typeof buttonSizes[number]
 
 export function ButtonSizeDropdown({ initialSize = 'default', onChange }: ButtonSizeDropdownProps)  {
-  console.log('initialsize',initialSize);
   const [selectedSize, setSelectedSize] = React.useState<ButtonSize>(initialSize)
   const handleBtnSizeChange=(size:ButtonSize)=>{
     setSelectedSize(size)

@@ -18,6 +18,7 @@ interface EnhancedTextEditorProps {
   styles: Record<string, any>;
   componentName: string;
   onShadCNPropChange?: (prop: any) => void;
+  fontSize?:number;
 }
 
 export const EnhancedTextEditor = ({
@@ -29,7 +30,9 @@ export const EnhancedTextEditor = ({
   styles,
   componentName,
   onShadCNPropChange,
+  fontSize=0
 }: EnhancedTextEditorProps) => {
+  // console.log(fontSize);
   const [color, setColor] = React.useState(
     styles?.[componentName]?.color || {}
   );
@@ -60,6 +63,7 @@ export const EnhancedTextEditor = ({
           placeholder='Font size (px)'
           className='w-24'
           onChange={(e) => onStyleChange({ fontSize: `${e.target.value}px` })}
+          defaultValue={fontSize}
         />
         <Popover>
           <PopoverTrigger asChild>

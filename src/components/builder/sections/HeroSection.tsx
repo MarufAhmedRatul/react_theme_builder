@@ -18,7 +18,6 @@ export const HeroSection = ({
   onContentChange,
   onStyleChange,
 }: HeroSectionProps) => {
-  // console.log(styles.heroButtonTextShadCN);
 
   return (
     <div className="bg-white p-8" style={styles.background || {}}>
@@ -28,6 +27,7 @@ export const HeroSection = ({
             styles={styles}
             componentName='heroTitle'
             value={content.heroTitle }
+            fontSize={styles.heroTitle?.fontSize?parseInt(styles.heroTitle.fontSize,10)?parseInt(styles.heroTitle.fontSize,10):36:36}
             placeholder="Title here"
             onChange={(value) => onContentChange('heroTitle', value)}
             onStyleChange={(style) => onStyleChange('heroTitle', style)}
@@ -39,6 +39,7 @@ export const HeroSection = ({
             onChange={(value) => onContentChange('heroSubtitle', value)}
             onStyleChange={(style) => onStyleChange('heroSubtitle', style)}
             placeholder='Subtitle here'
+            fontSize={styles.heroSubtitle?.fontSize?parseInt(styles.heroSubtitle.fontSize,10)?parseInt(styles.heroSubtitle.fontSize,10):20:20}
             multiline
           />
           <Input
@@ -58,6 +59,7 @@ export const HeroSection = ({
           componentName='heroButtonText'
             value={content.heroButtonText}
             placeholder='Button Text'
+            fontSize={styles.heroButtonText?.fontSize?parseInt(styles.heroButtonText.fontSize,10)?parseInt(styles.heroButtonText.fontSize,10):16:16}
             onChange={(value) => onContentChange('heroButtonText', value)}
             onStyleChange={(style) => onStyleChange('heroButtonText', style)}
             onShadCNPropChange={(prop) => onStyleChange('heroButtonTextShadCN', prop)}
