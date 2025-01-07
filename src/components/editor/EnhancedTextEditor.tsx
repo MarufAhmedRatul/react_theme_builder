@@ -52,8 +52,6 @@ export const EnhancedTextEditor = ({
     onShadCNPropChange({ size: size });
   };
 
-
-
   return (
     <div className='space-y-2'>
       <div className='flex gap-2 items-center'>
@@ -121,7 +119,7 @@ export const EnhancedTextEditor = ({
         )}
         {componentName === "heroButtonText" && (
           <ButtonSizeDropdown
-            initialSize={styles?.heroButtonTex?.heroButtonTextShadCN}
+            initialSize={styles.heroButtonTextShadCN.size}
             onChange={handleBtnSizeChange}
           ></ButtonSizeDropdown>
         )}

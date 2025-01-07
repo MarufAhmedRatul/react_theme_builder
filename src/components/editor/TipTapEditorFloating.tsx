@@ -90,6 +90,7 @@ function TipTapEditorFloating({value,onChange}) {
     >
       <Minus className='w-4 h-4' />
     </button>
+    
   </FloatingMenu>
     <BubbleMenu
       editor={editor}

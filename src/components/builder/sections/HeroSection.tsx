@@ -18,9 +18,7 @@ export const HeroSection = ({
   onContentChange,
   onStyleChange,
 }: HeroSectionProps) => {
-  console.log(styles.heroButtonTextShadCN);
-  const testProp={size:""}
-  console.log(content.heroSubtitle);
+  // console.log(styles.heroButtonTextShadCN);
 
   return (
     <div className="bg-white p-8" style={styles.background || {}}>
