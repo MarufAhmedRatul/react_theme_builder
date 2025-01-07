@@ -136,6 +136,7 @@ export const PreviewComponent = ({
     >
       <StylePickerDialog
         open={showStylePicker}
+        // component={component}
         onOpenChange={setShowStylePicker}
         options={componentStyles[component.type] || []}
         currentStyle={content.style || ""}

@@ -1,6 +1,6 @@
-import { useEditor, EditorContent } from '@tiptap/react';
-import StarterKit from '@tiptap/starter-kit';
-import { useEffect } from 'react';
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import { useEffect } from "react";
 
 interface TipTapEditorProps {
   value: string;
@@ -23,8 +23,8 @@ export const TipTapEditor = ({ value, onChange }: TipTapEditorProps) => {
   }, [value, editor]);
 
   return (
-    <div className="border rounded-md p-2">
-      <EditorContent editor={editor} className="prose prose-sm max-w-none min-h-[100px]" />
+    <div className="p-2">
+      <EditorContent editor={editor} className="prose prose-sm max-w-none" />
     </div>
   );
 };

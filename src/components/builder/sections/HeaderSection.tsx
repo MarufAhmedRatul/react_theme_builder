@@ -104,7 +104,7 @@ export const HeaderSection = ({
   const StylePickerButton = () =>
     isEditing && (
       <div className="mb-4">
-        <Button variant="outline" onClick={() => setShowStylePicker(true)}>
+        <Button variant="destructive" onClick={() => setShowStylePicker(true)}>
           Change Header Style
         </Button>
       </div>
