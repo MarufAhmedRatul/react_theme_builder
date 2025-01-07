@@ -79,6 +79,7 @@ export const PreviewComponent = ({ component, index, onRemove, onReorder }: Prev
           />
         );
       case 'hero':
+        // console.log('hero section rendering');
         return (
           <HeroSection
             content={content}

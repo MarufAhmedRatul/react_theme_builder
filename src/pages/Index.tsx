@@ -40,6 +40,7 @@ const Index = () => {
       return newComponents;
     });
   };
+  // console.log(components);
 
   return (
     <DndProvider backend={HTML5Backend}>

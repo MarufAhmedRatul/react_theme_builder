@@ -60,6 +60,8 @@ export const HeaderSection = ({
     onContentChange('headerStyle', styleId);
     setShowStylePicker(false);
   };
+  // what style do you want?
+  console.log(content.style);
 
   return (
     <>
