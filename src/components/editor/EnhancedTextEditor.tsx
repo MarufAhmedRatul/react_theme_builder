@@ -119,7 +119,7 @@ export const EnhancedTextEditor = ({
         )}
         {componentName === "heroButtonText" && (
           <ButtonSizeDropdown
-            initialSize={styles.heroButtonTextShadCN.size}
+            initialSize={styles.heroButtonTextShadCN?.size}
             onChange={handleBtnSizeChange}
           ></ButtonSizeDropdown>
         )}

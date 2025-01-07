@@ -56,7 +56,8 @@ export const HeroSection = ({
           <EnhancedTextEditor
           styles={styles}
           componentName='heroButtonText'
-            value={content.heroButtonText || 'Learn More'}
+            value={content.heroButtonText}
+            placeholder='Button Text'
             onChange={(value) => onContentChange('heroButtonText', value)}
             onStyleChange={(style) => onStyleChange('heroButtonText', style)}
             onShadCNPropChange={(prop) => onStyleChange('heroButtonTextShadCN', prop)}
@@ -77,13 +78,12 @@ export const HeroSection = ({
           </h1>
           <div 
             className="text-xl mb-8 prose prose-slate max-w-none
-              [&>ol]:list-decimal 
+              [&>ol]:list-decimal [&>ul]:list-disc
           "
             style={styles.heroSubtitle || {}}
             dangerouslySetInnerHTML={{__html:content.heroSubtitle||"This is Subtitle"}}
           />
           <a href={content.heroButtonUrl || '#'}>
-
             <Button {...styles.heroButtonTextShadCN}   style={styles.heroButtonText || {}}>
               {content.heroButtonText || 'Learn More'}
             </Button>
