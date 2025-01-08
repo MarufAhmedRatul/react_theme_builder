@@ -1,23 +1,19 @@
 import { EnhancedTextEditor } from "@/components/editor/EnhancedTextEditor";
+import { GradientPicker } from "@/components/editor/GradientPicker";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import React from "react";
-import { Button } from '@/components/ui/button'
 
-const FullScreenHero = ({
+function GradientHero({
   isEditing,
   styles,
   content,
   onContentChange,
   onStyleChange,
-}) => {
-  const backgroundImageStyle: React.CSSProperties = {
-    backgroundImage: content.heroBackground?`url(${content.heroBackground})`:'url("/placeholder.svg?height=1080&width=1920")',
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundSize: "cover",
-  };
+}) {
+  const colorFrom = styles.heroGradient?.colorFrom || "#a855f7";
+  const colorTo = styles.heroGradient?.colorTo || "#ec4899";
   return (
-    <div>
+    <>
       {isEditing ? (
         <div className='space-y-4'>
           <EnhancedTextEditor
@@ -51,12 +47,12 @@ const FullScreenHero = ({
             }
             multiline
           />
-          <Input
-            type='url'
-            placeholder='Background Image URL'
-            value={content.heroBackground || ""}
-            onChange={(e) => onContentChange("heroBackground", e.target.value)}
+          <GradientPicker
+            styles={styles}
+            componentName='heroGradient'
+            onStyleChange={(style) => onStyleChange("heroGradient", style)}
           />
+
           <Input
             type='url'
             placeholder='Button URL'
@@ -83,41 +79,41 @@ const FullScreenHero = ({
           />
         </div>
       ) : (
-        <div className='relative h-screen w-full' style={backgroundImageStyle}>
-          {/* Overlay */}
-          <div className='absolute inset-0 bg-black bg-opacity-20' />
-
-          {/* Content */}
-          <div className='relative z-10 flex flex-col h-full items-center justify-start p-8 sm:p-12 md:p-16 lg:p-40'>
-            <div className='text-left max-w-2xl '>
-              <h1 className="text-4xl font-bold mb-4 text-white" style={styles.heroTitle || {}}>
-              {content.heroTitle || ' Welcome to Our Website'}
-              </h1>
-              <div
-                  className='text-xl text-white mb-8 prose prose-slate max-w-none
-            [&>ol]:list-decimal [&>ul]:list-disc [&>ul]:ml-8 [&>ol]:ml-8
-        '
-                  style={styles.heroSubtitle || {}}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      content.heroSubtitle ||
-                      " Discover Amazing thing with us",
-                  }}
-                />
-              <a href={content.heroButtonUrl || "#"}>
-                  <Button
-                    {...styles.heroButtonTextShadCN}
-                    style={styles.heroButtonText || {}}
-                  >
-                    {content.heroButtonText || "Lets Go 🚀"}
-                  </Button>
-                  </a>
-            </div>
+        <div>
+          <div
+            style={{
+              background: `linear-gradient(to right, ${colorFrom}, ${colorTo})`,
+            }}
+            className='min-h-screen flex flex-col items-center justify-center text-center'
+          >
+            <h1
+              className='text-4xl font-bold mb-4 text-white'
+              style={styles.heroTitle || {}}
+            >
+              {content.heroTitle || " Welcome to Our Website"}
+            </h1>
+            <div
+              className='text-xl text-white mb-8 prose prose-slate max-w-none
+            [&>ol]:list-decimal [&>ul]:list-disc [&>ul]:ml-8 [&>ol]:ml-8 flex-none
+          '
+              style={styles.heroSubtitle || {}}
+              dangerouslySetInnerHTML={{
+                __html:
+                  content.heroSubtitle || " Discover Amazing thing with us",
+              }}
+            />
+            <a href={content.heroButtonUrl || "#"}>
+              <Button
+                {...styles.heroButtonTextShadCN}
+                style={styles.heroButtonText || {}}
+              >
+                {content.heroButtonText || "Lets Go 🚀"}
+              </Button>
+            </a>
           </div>
         </div>
       )}
-    </div>
+    </>
   );
-};
-
-export default FullScreenHero;
+}
+export default GradientHero;
