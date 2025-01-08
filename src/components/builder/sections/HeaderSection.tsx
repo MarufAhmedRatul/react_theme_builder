@@ -220,7 +220,7 @@ export const HeaderSection = ({
             : layout === "between"
             ? "justify-between"
             : ""
-        } bg-[${color}] items-center ${headerStyle.className}`}
+        } items-center ${headerStyle.className}`}
         style={styles.background || {}}
       >
         <ShowLogo />
