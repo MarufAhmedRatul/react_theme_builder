@@ -29,5 +29,17 @@ export const TipTapEditor = ({ value, onChange }: TipTapEditorProps) => {
         className="prose prose-sm max-w-none border-white"
       />
     </div>
+    // <>
+    //   <Input
+    //     type="text"
+    //     value={value}
+    //     onChange={(e) => onChange(e.target.value)}
+    //     className="w-full"
+    //   />
+    //   <EditorContent
+    //     editor={editor}
+    //     className="prose prose-sm max-w-none border-white"
+    //   />
+    // </>
   );
 };

@@ -28,7 +28,7 @@ const headerStyles = [
     id: "classic",
     label: "Classic",
     // className: "",
-    className: "bg-white border-b",
+    className: "bg-slate-400 border-b",
     preview: "Simple and clean header with logo and navigation",
   },
   {
