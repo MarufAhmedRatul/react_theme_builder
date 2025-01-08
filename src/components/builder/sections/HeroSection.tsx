@@ -23,7 +23,7 @@ export const HeroSection = ({
   onStyleChange,
 }: HeroSectionProps) => {
   const layout=content.style||'centered'
-  console.log(layout);
+
   return (
     <>
       {layout === 'centered' && (
@@ -53,6 +53,7 @@ export const HeroSection = ({
           onStyleChange={onStyleChange}
         />
       )}    
+      
       {layout === 'gradient' && (
         <GradientHero 
           content={content} 

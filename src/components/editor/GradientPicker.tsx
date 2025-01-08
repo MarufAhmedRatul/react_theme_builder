@@ -32,7 +32,7 @@ export const GradientPicker = ({
     setColorTo(color.hex);
     onStyleChange({ colorTo: color.hex });
   };
-  console.log(styles.heroGradient);
+
 
 
   return (

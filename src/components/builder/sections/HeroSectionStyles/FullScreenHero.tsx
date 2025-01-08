@@ -1,7 +1,7 @@
 import { EnhancedTextEditor } from "@/components/editor/EnhancedTextEditor";
 import { Input } from "@/components/ui/input";
 import React from "react";
-import { Button } from '@/components/ui/button'
+import { Button } from "@/components/ui/button";
 
 const FullScreenHero = ({
   isEditing,
@@ -11,7 +11,9 @@ const FullScreenHero = ({
   onStyleChange,
 }) => {
   const backgroundImageStyle: React.CSSProperties = {
-    backgroundImage: content.heroBackground?`url(${content.heroBackground})`:'url("/placeholder.svg?height=1080&width=1920")',
+    backgroundImage: content.heroBackground
+      ? `url(${content.heroBackground})`
+      : 'url("/placeholder.svg?height=1080&width=1920")',
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
@@ -84,34 +86,33 @@ const FullScreenHero = ({
         </div>
       ) : (
         <div className='relative h-screen w-full' style={backgroundImageStyle}>
-          {/* Overlay */}
-          <div className='absolute inset-0 bg-black bg-opacity-20' />
-
-          {/* Content */}
-          <div className='relative z-10 flex flex-col h-full items-center justify-start p-8 sm:p-12 md:p-16 lg:p-40'>
-            <div className='text-left max-w-2xl '>
-              <h1 className="text-4xl font-bold mb-4 text-white" style={styles.heroTitle || {}}>
-              {content.heroTitle || ' Welcome to Our Website'}
+          <div className='absolute inset-0 bg-black bg-opacity-50' />
+          <div className='relative z-10 flex h-full items-center justify-start p-8 sm:p-12 md:p-16 lg:p-24'>
+            <div className='text-left max-w-2xl'>
+              <h1
+                className='text-4xl font-bold mb-4 text-white'
+                style={styles.heroTitle || {}}
+              >
+                {content.heroTitle || " Welcome to Our Website"}
               </h1>
               <div
-                  className='text-xl text-white mb-8 prose prose-slate max-w-none
+                className='text-xl text-white mb-8 prose prose-slate max-w-none
             [&>ol]:list-decimal [&>ul]:list-disc [&>ul]:ml-8 [&>ol]:ml-8
         '
-                  style={styles.heroSubtitle || {}}
-                  dangerouslySetInnerHTML={{
-                    __html:
-                      content.heroSubtitle ||
-                      " Discover Amazing thing with us",
-                  }}
-                />
+                style={styles.heroSubtitle || {}}
+                dangerouslySetInnerHTML={{
+                  __html:
+                    content.heroSubtitle || " Discover Amazing thing with us",
+                }}
+              />
               <a href={content.heroButtonUrl || "#"}>
-                  <Button
-                    {...styles.heroButtonTextShadCN}
-                    style={styles.heroButtonText || {}}
-                  >
-                    {content.heroButtonText || "Lets Go 🚀"}
-                  </Button>
-                  </a>
+                <Button
+                  {...styles.heroButtonTextShadCN}
+                  style={styles.heroButtonText || {}}
+                >
+                  {content.heroButtonText || "Lets Go 🚀"}
+                </Button>
+              </a>
             </div>
           </div>
         </div>
