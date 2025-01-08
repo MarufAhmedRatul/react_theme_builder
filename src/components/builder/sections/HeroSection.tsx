@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import CenterHero from './HeroSectionStyles/CenterHero';
 import SplitHero from './HeroSectionStyles/SplitHero';
+import FullScreenHero from './HeroSectionStyles/FullScreenHero';
 // import DOMPurify from 'dompurify';
 
 interface HeroSectionProps {
@@ -116,7 +117,16 @@ export const HeroSection = ({
           onContentChange={onContentChange} 
           onStyleChange={onStyleChange}
         />
+      )} {layout === 'fullscreen' && (
+        <FullScreenHero 
+          content={content} 
+          styles={styles}
+          isEditing={isEditing}
+          onContentChange={onContentChange} 
+          onStyleChange={onStyleChange}
+        />
       )}
+      
       </>
 
 

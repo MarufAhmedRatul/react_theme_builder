@@ -1,17 +1,23 @@
 import { EnhancedTextEditor } from "@/components/editor/EnhancedTextEditor";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React from "react";
+import { Button } from '@/components/ui/button'
 
-function SplitHero({
+const FullScreenHero = ({
   isEditing,
   styles,
   content,
   onContentChange,
   onStyleChange,
-}) {
+}) => {
+  const backgroundImageStyle: React.CSSProperties = {
+    backgroundImage: content.heroBackground?`url(${content.heroBackground})`:'url("/placeholder.svg?height=1080&width=1920")',
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundSize: "cover",
+  };
   return (
-    <section className='w-full py-12 md:py-24 lg:py-32 xl:py-48'>
+    <div>
       {isEditing ? (
         <div className='space-y-4'>
           <EnhancedTextEditor
@@ -47,9 +53,9 @@ function SplitHero({
           />
           <Input
             type='url'
-            placeholder='Image URL'
-            value={content.heroImage || ""}
-            onChange={(e) => onContentChange("heroImage", e.target.value)}
+            placeholder='Background Image URL'
+            value={content.heroBackground || ""}
+            onChange={(e) => onContentChange("heroBackground", e.target.value)}
           />
           <Input
             type='url'
@@ -77,55 +83,41 @@ function SplitHero({
           />
         </div>
       ) : (
-        <div className='container px-4 md:px-6 mx-auto'>
-          <div className='grid gap-6 lg:grid-cols-2 lg:gap-12 items-center'>
-            <div className='flex flex-col justify-center space-y-4'>
-              <div className='space-y-2'>
-                <h1
-                  className='text-4xl font-bold mb-4'
-                  style={styles.heroTitle || {}}
-                >
-                  {content.heroTitle || "Revolutionize Health Care"}
-                </h1>
-                <div
-                  className='text-xl mb-8 prose prose-slate max-w-none
+        <div className='relative h-screen w-full' style={backgroundImageStyle}>
+          {/* Overlay */}
+          <div className='absolute inset-0 bg-black bg-opacity-20' />
+
+          {/* Content */}
+          <div className='relative z-10 flex h-full items-center justify-start p-8 sm:p-12 md:p-16 lg:p-40'>
+            <div className='text-left max-w-2xl'>
+              <h1 className="text-4xl font-bold mb-4 text-white" style={styles.heroTitle || {}}>
+              {content.heroTitle || ' Welcome to Our Website'}
+              </h1>
+              <div
+                  className='text-xl text-white mb-8 prose prose-slate max-w-none
             [&>ol]:list-decimal [&>ul]:list-disc [&>ul]:ml-8 [&>ol]:ml-8
         '
                   style={styles.heroSubtitle || {}}
                   dangerouslySetInnerHTML={{
                     __html:
                       content.heroSubtitle ||
-                      " Streamline your projects, boost productivity, and achieve your goals faster than ever before.",
+                      " Discover Amazing thing with us",
                   }}
                 />
-              </div>
-              <div className='flex flex-col gap-2 min-[400px]:flex-row'>
-                <a href={content.heroButtonUrl || "#"}>
+              <a href={content.heroButtonUrl || "#"}>
                   <Button
                     {...styles.heroButtonTextShadCN}
                     style={styles.heroButtonText || {}}
                   >
                     {content.heroButtonText || "Lets Go 🚀"}
                   </Button>
-                </a>
-              </div>
-            </div>
-            <div className='flex items-center justify-center'>
-              <img
-                src={
-                  content.heroImage
-                    ? content.heroImage
-                    : "https://via.placeholder.com/550"
-                }
-                alt='Hero'
-                className='aspect-square w-full max-w-[550px] overflow-hidden rounded-xl object-cover object-center'
-              />
+                  </a>
             </div>
           </div>
         </div>
       )}
-    </section>
+    </div>
   );
-}
+};
 
-export default SplitHero;
+export default FullScreenHero;
