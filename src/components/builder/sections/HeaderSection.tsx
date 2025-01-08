@@ -10,7 +10,8 @@ import {
 //   PopoverContent,
 //   PopoverTrigger,
 // } from "@/components/ui/popover";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+// import { ChromePicker } from "react-color";
 import { TipTapEditor } from "../../editor/TipTapEditor";
 import { MenuItem } from "./MenuItem";
 
@@ -26,6 +27,7 @@ const headerStyles = [
   {
     id: "classic",
     label: "Classic",
+    // className: "",
     className: "bg-white border-b",
     preview: "Simple and clean header with logo and navigation",
   },
@@ -67,9 +69,9 @@ export const HeaderSection = ({
   onStyleChange,
 }: HeaderSectionProps) => {
   const [showStylePicker, setShowStylePicker] = useState(!content.headerStyle);
-  const [latestContent, setLatestContent] = useState(content);
+  const [layout, setLayout] = useState(content.style);
   const currentStyle = content.headerStyle || "classic";
-  const [color, setColor] = React.useState("#000000");
+  // const [color, setColor] = React.useState("#000000");
   const headerStyle =
     headerStyles.find((style) => style.id === currentStyle) || headerStyles[0];
 
@@ -80,11 +82,13 @@ export const HeaderSection = ({
 
   // const handleColorChange = (color: any) => {
   //   setColor(color.hex);
-  //   console.log(color);
+  //   console.log(color.hex);
+  //   // onStyleChange({ color: color.hex });
   // };
 
   const layoutHandler = (e: any) => {
-    setLatestContent({ ...latestContent, style: e });
+    content.style = e;
+    setLayout(content.style);
   };
 
   const ShowLogo = () => (
@@ -160,7 +164,7 @@ export const HeaderSection = ({
   //   );
 
   useEffect(() => {
-    setLatestContent(content);
+    setLayout(content.style);
     console.log(content);
   }, [content]);
 
@@ -206,7 +210,17 @@ export const HeaderSection = ({
       </div>
       {/* <h1>{color}</h1> */}
       <nav
-        className={`flex p-5 gap-5 justify-${latestContent.style} bg-[${color}] items-center ${headerStyle.className}`}
+        className={`flex p-5 gap-5 ${
+          layout === "start"
+            ? "justify-start"
+            : layout === "end"
+            ? "justify-end"
+            : layout === "center"
+            ? "justify-center"
+            : layout === "between"
+            ? "justify-between"
+            : ""
+        } bg-[${color}] items-center ${headerStyle.className}`}
         style={styles.background || {}}
       >
         <ShowLogo />
