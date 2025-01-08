@@ -1,4 +1,5 @@
 import BasicGrid from "./GridSectionStyles/BasicGrid";
+import CardGrid from "./GridSectionStyles/CardGrid";
 
 interface GridSectionProps {
   content: Record<string, string>;
@@ -27,6 +28,13 @@ export const GridSection = ({
           onStyleChange={onStyleChange}
           gridCount={gridCount}
           ></BasicGrid>}
+    {layout==='cards'&&<CardGrid content={content} 
+          styles={styles}
+          isEditing={isEditing}
+          onContentChange={onContentChange} 
+          onStyleChange={onStyleChange}
+          gridCount={gridCount}
+          ></CardGrid>}
     </>
 
   );
