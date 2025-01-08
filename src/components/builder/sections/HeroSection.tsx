@@ -53,6 +53,15 @@ export const HeroSection = ({
           onStyleChange={onStyleChange}
         />
       )}    
+            {layout === 'minimal' && (
+        <FullScreenHero 
+          content={content} 
+          styles={styles}
+          isEditing={isEditing}
+          onContentChange={onContentChange} 
+          onStyleChange={onStyleChange}
+        />
+      )} 
       
       {layout === 'gradient' && (
         <GradientHero 
