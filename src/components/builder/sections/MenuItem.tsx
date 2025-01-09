@@ -18,14 +18,24 @@ export const MenuItem = ({
       <div className="flex flex-col justify-end gap-2 text-black">
         <input
           className="rounded-md p-1"
-          value={content[`menuItem${index}`] || item}
+          value={
+            content[`menuItem${index}`] !== undefined &&
+            content[`menuItem${index}`] !== null
+              ? content[`menuItem${index}`]
+              : item
+          }
           onChange={(e) => onContentChange(`menuItem${index}`, e.target.value)}
         />
         <input
           className="rounded-md p-1"
           type="url"
           placeholder="URL"
-          value={content[`menuUrl${index}`] || ""}
+          value={
+            content[`menuUrl${index}`] !== undefined &&
+            content[`menuUrl${index}`] !== undefined
+              ? content[`menuUrl${index}`]
+              : ""
+          }
           onChange={(e) => onContentChange(`menuUrl${index}`, e.target.value)}
         />
       </div>
