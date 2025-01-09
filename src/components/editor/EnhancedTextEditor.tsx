@@ -75,7 +75,7 @@ export const EnhancedTextEditor = ({
                 className='w-4 h-4 rounded-sm border'
                 style={{ backgroundColor: color }}
               />
-              Color
+              Font Color
             </button>
           </PopoverTrigger>
           <PopoverContent className='p-0 border-none'>

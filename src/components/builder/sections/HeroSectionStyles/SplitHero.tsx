@@ -11,9 +11,10 @@ function SplitHero({
   onStyleChange,
 }) {
   return (
-    <section className='w-full py-12 md:py-24 lg:py-32 xl:py-48'>
+    <section className='w-full py-12 '>
       {isEditing ? (
         <div className='space-y-4'>
+          <div className="border rounded-lg border-purple-300 p-2 ">            
           <EnhancedTextEditor
             styles={styles}
             componentName='heroTitle'
@@ -29,52 +30,59 @@ function SplitHero({
             onChange={(value) => onContentChange("heroTitle", value)}
             onStyleChange={(style) => onStyleChange("heroTitle", style)}
           />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroSubtitle'
-            value={content.heroSubtitle}
-            onChange={(value) => onContentChange("heroSubtitle", value)}
-            onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
-            placeholder='Subtitle here'
-            fontSize={
-              styles.heroSubtitle?.fontSize
-                ? parseInt(styles.heroSubtitle.fontSize, 10)
+          </div>
+          <div className="border border-purple-300 rounded-lg p-2">
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroSubtitle'
+              value={content.heroSubtitle}
+              onChange={(value) => onContentChange("heroSubtitle", value)}
+              onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
+              placeholder='Subtitle here'
+              fontSize={
+                styles.heroSubtitle?.fontSize
                   ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    : 20
                   : 20
-                : 20
-            }
-            multiline
-          />
+              }
+              multiline
+            />
+          </div>
           <Input
             type='url'
             placeholder='Image URL'
             value={content.heroImage || ""}
             onChange={(e) => onContentChange("heroImage", e.target.value)}
           />
-          <Input
-            type='url'
-            placeholder='Button URL'
-            value={content.heroButtonUrl || ""}
-            onChange={(e) => onContentChange("heroButtonUrl", e.target.value)}
-          />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroButtonText'
-            value={content.heroButtonText}
-            placeholder='Button Text'
-            fontSize={
-              styles.heroButtonText?.fontSize
-                ? parseInt(styles.heroButtonText.fontSize, 10)
+
+          <div className="border border-purple-300 rounded-lg p-2" >
+            <Input
+            className="mb-2"
+              type='url'
+              placeholder='Button URL'
+              value={content.heroButtonUrl || ""}
+              onChange={(e) => onContentChange("heroButtonUrl", e.target.value)}
+            />
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroButtonText'
+              value={content.heroButtonText}
+              placeholder='Button Text'
+              fontSize={
+                styles.heroButtonText?.fontSize
                   ? parseInt(styles.heroButtonText.fontSize, 10)
+                    ? parseInt(styles.heroButtonText.fontSize, 10)
+                    : 16
                   : 16
-                : 16
-            }
-            onChange={(value) => onContentChange("heroButtonText", value)}
-            onStyleChange={(style) => onStyleChange("heroButtonText", style)}
-            onShadCNPropChange={(prop) =>
-              onStyleChange("heroButtonTextShadCN", prop)
-            }
-          />
+              }
+              onChange={(value) => onContentChange("heroButtonText", value)}
+              onStyleChange={(style) => onStyleChange("heroButtonText", style)}
+              onShadCNPropChange={(prop) =>
+                onStyleChange("heroButtonTextShadCN", prop)
+              }
+            />
+          </div>
         </div>
       ) : (
         <div className='container px-4 md:px-6 mx-auto'>
