@@ -60,6 +60,7 @@ function GradientHero({
           </div>
           <div className='border border-purple-300 rounded-lg p-2'>
             <Input
+            className="mb-2"
               type='url'
               placeholder='Button URL'
               value={content.heroButtonUrl || ""}

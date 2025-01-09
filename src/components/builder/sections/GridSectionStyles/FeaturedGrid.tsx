@@ -1,5 +1,3 @@
-import Image from 'next/image'
-
 interface GridItem {
   id: number
   title: string
@@ -15,7 +13,7 @@ const gridItems: GridItem[] = [
   { id: 6, title: "Item 6", imageUrl: "/placeholder.svg?height=400&width=600" },
 ]
 
-export default function FeaturedGridLayout() {
+export default function FeaturedGrid({isEditing,styles,content,onContentChange,onStyleChange,gridCount}) {
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -26,7 +24,7 @@ export default function FeaturedGridLayout() {
               index === 0 ? 'md:col-span-2 md:row-span-2' : ''
             }`}
           >
-            <Image
+            <img
               src={item.imageUrl}
               alt={item.title}
               width={index === 0 ? 800 : 600}

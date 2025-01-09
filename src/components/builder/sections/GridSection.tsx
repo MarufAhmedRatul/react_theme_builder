@@ -1,5 +1,6 @@
 import BasicGrid from "./GridSectionStyles/BasicGrid";
 import CardGrid from "./GridSectionStyles/CardGrid";
+import FeaturedGrid from "./GridSectionStyles/FeaturedGrid";
 
 interface GridSectionProps {
   content: Record<string, string>;
@@ -18,7 +19,7 @@ export const GridSection = ({
 }: GridSectionProps) => {
   const layout=content.style||'basic'
   const gridCount = parseInt(content.gridCount || '3', 10);
-
+  console.log(layout);
   return (
     <>
     {layout==='basic'&&<BasicGrid content={content} 
@@ -35,7 +36,17 @@ export const GridSection = ({
           onStyleChange={onStyleChange}
           gridCount={gridCount}
           ></CardGrid>}
+          {layout==='featured'&&<FeaturedGrid content={content} 
+          styles={styles}
+          isEditing={isEditing}
+          onContentChange={onContentChange} 
+          onStyleChange={onStyleChange}
+          gridCount={gridCount}
+          ></FeaturedGrid>}
+
+
     </>
+    
 
   );
 };
