@@ -16,67 +16,74 @@ function GradientHero({
     <>
       {isEditing ? (
         <div className='space-y-4'>
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroTitle'
-            value={content.heroTitle}
-            fontSize={
-              styles.heroTitle?.fontSize
-                ? parseInt(styles.heroTitle.fontSize, 10)
+          <div className='border border-purple-300 rounded-lg p-2'>
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroTitle'
+              value={content.heroTitle}
+              fontSize={
+                styles.heroTitle?.fontSize
                   ? parseInt(styles.heroTitle.fontSize, 10)
+                    ? parseInt(styles.heroTitle.fontSize, 10)
+                    : 36
                   : 36
-                : 36
-            }
-            placeholder='Title here'
-            onChange={(value) => onContentChange("heroTitle", value)}
-            onStyleChange={(style) => onStyleChange("heroTitle", style)}
-          />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroSubtitle'
-            value={content.heroSubtitle}
-            onChange={(value) => onContentChange("heroSubtitle", value)}
-            onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
-            placeholder='Subtitle here'
-            fontSize={
-              styles.heroSubtitle?.fontSize
-                ? parseInt(styles.heroSubtitle.fontSize, 10)
+              }
+              placeholder='Title here'
+              onChange={(value) => onContentChange("heroTitle", value)}
+              onStyleChange={(style) => onStyleChange("heroTitle", style)}
+            />
+          </div>
+          <div className='border border-purple-300 rounded-lg p-2'>
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroSubtitle'
+              value={content.heroSubtitle}
+              onChange={(value) => onContentChange("heroSubtitle", value)}
+              onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
+              placeholder='Subtitle here'
+              fontSize={
+                styles.heroSubtitle?.fontSize
                   ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    : 20
                   : 20
-                : 20
-            }
-            multiline
-          />
-          <GradientPicker
-            styles={styles}
-            componentName='heroGradient'
-            onStyleChange={(style) => onStyleChange("heroGradient", style)}
-          />
-
-          <Input
-            type='url'
-            placeholder='Button URL'
-            value={content.heroButtonUrl || ""}
-            onChange={(e) => onContentChange("heroButtonUrl", e.target.value)}
-          />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroButtonText'
-            value={content.heroButtonText}
-            placeholder='Button Text'
-            fontSize={
-              styles.heroButtonText?.fontSize
-                ? parseInt(styles.heroButtonText.fontSize, 10)
+              }
+              multiline
+            />
+          </div>
+          <div className='border border-purple-300 rounded-lg p-2'>
+            <GradientPicker
+              styles={styles}
+              componentName='heroGradient'
+              onStyleChange={(style) => onStyleChange("heroGradient", style)}
+            />
+          </div>
+          <div className='border border-purple-300 rounded-lg p-2'>
+            <Input
+              type='url'
+              placeholder='Button URL'
+              value={content.heroButtonUrl || ""}
+              onChange={(e) => onContentChange("heroButtonUrl", e.target.value)}
+            />
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroButtonText'
+              value={content.heroButtonText}
+              placeholder='Button Text'
+              fontSize={
+                styles.heroButtonText?.fontSize
                   ? parseInt(styles.heroButtonText.fontSize, 10)
+                    ? parseInt(styles.heroButtonText.fontSize, 10)
+                    : 16
                   : 16
-                : 16
-            }
-            onChange={(value) => onContentChange("heroButtonText", value)}
-            onStyleChange={(style) => onStyleChange("heroButtonText", style)}
-            onShadCNPropChange={(prop) =>
-              onStyleChange("heroButtonTextShadCN", prop)
-            }
-          />
+              }
+              onChange={(value) => onContentChange("heroButtonText", value)}
+              onStyleChange={(style) => onStyleChange("heroButtonText", style)}
+              onShadCNPropChange={(prop) =>
+                onStyleChange("heroButtonTextShadCN", prop)
+              }
+            />
+          </div>
         </div>
       ) : (
         <div>

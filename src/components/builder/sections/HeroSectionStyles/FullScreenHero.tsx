@@ -22,67 +22,74 @@ const FullScreenHero = ({
     <div>
       {isEditing ? (
         <div className='space-y-4'>
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroTitle'
-            value={content.heroTitle}
-            fontSize={
-              styles.heroTitle?.fontSize
-                ? parseInt(styles.heroTitle.fontSize, 10)
+          <div className="border border-purple-300 rounded-lg p-2">
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroTitle'
+              value={content.heroTitle}
+              fontSize={
+                styles.heroTitle?.fontSize
                   ? parseInt(styles.heroTitle.fontSize, 10)
+                    ? parseInt(styles.heroTitle.fontSize, 10)
+                    : 36
                   : 36
-                : 36
-            }
-            placeholder='Title here'
-            onChange={(value) => onContentChange("heroTitle", value)}
-            onStyleChange={(style) => onStyleChange("heroTitle", style)}
-          />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroSubtitle'
-            value={content.heroSubtitle}
-            onChange={(value) => onContentChange("heroSubtitle", value)}
-            onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
-            placeholder='Subtitle here'
-            fontSize={
-              styles.heroSubtitle?.fontSize
-                ? parseInt(styles.heroSubtitle.fontSize, 10)
+              }
+              placeholder='Title here'
+              onChange={(value) => onContentChange("heroTitle", value)}
+              onStyleChange={(style) => onStyleChange("heroTitle", style)}
+            />
+          </div>
+          <div className="border border-purple-300 rounded-lg p-2">
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroSubtitle'
+              value={content.heroSubtitle}
+              onChange={(value) => onContentChange("heroSubtitle", value)}
+              onStyleChange={(style) => onStyleChange("heroSubtitle", style)}
+              placeholder='Subtitle here'
+              fontSize={
+                styles.heroSubtitle?.fontSize
                   ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    ? parseInt(styles.heroSubtitle.fontSize, 10)
+                    : 20
                   : 20
-                : 20
-            }
-            multiline
-          />
+              }
+              multiline
+            />
+          </div>
           <Input
             type='url'
             placeholder='Background Image URL'
             value={content.heroBackground || ""}
             onChange={(e) => onContentChange("heroBackground", e.target.value)}
           />
+          <div className="border border-purple-300 rounded-lg p-2">
           <Input
+          className="mb-2"
             type='url'
             placeholder='Button URL'
             value={content.heroButtonUrl || ""}
             onChange={(e) => onContentChange("heroButtonUrl", e.target.value)}
           />
-          <EnhancedTextEditor
-            styles={styles}
-            componentName='heroButtonText'
-            value={content.heroButtonText}
-            placeholder='Button Text'
-            fontSize={
-              styles.heroButtonText?.fontSize
-                ? parseInt(styles.heroButtonText.fontSize, 10)
+            <EnhancedTextEditor
+              styles={styles}
+              componentName='heroButtonText'
+              value={content.heroButtonText}
+              placeholder='Button Text'
+              fontSize={
+                styles.heroButtonText?.fontSize
                   ? parseInt(styles.heroButtonText.fontSize, 10)
+                    ? parseInt(styles.heroButtonText.fontSize, 10)
+                    : 16
                   : 16
-                : 16
-            }
-            onChange={(value) => onContentChange("heroButtonText", value)}
-            onStyleChange={(style) => onStyleChange("heroButtonText", style)}
-            onShadCNPropChange={(prop) =>
-              onStyleChange("heroButtonTextShadCN", prop)
-            }
-          />
+              }
+              onChange={(value) => onContentChange("heroButtonText", value)}
+              onStyleChange={(style) => onStyleChange("heroButtonText", style)}
+              onShadCNPropChange={(prop) =>
+                onStyleChange("heroButtonTextShadCN", prop)
+              }
+            />
+          </div>
         </div>
       ) : (
         <div className='relative h-screen w-full' style={backgroundImageStyle}>
