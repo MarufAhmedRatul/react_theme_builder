@@ -5,13 +5,9 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import React, { useEffect, useState } from "react";
-import { ChromePicker } from "react-color";
+import { SketchPicker } from "react-color";
+import reactCSS from "reactcss";
 import { MenuItem } from "./MenuItem";
 
 interface HeaderSectionProps {
@@ -30,10 +26,13 @@ export const HeaderSection = ({
   onStyleChange,
 }: HeaderSectionProps) => {
   const [showStylePicker, setShowStylePicker] = useState(!content.headerStyle);
+  const [displayColorPicker, setDisplayColorPicker] = useState(false);
+  const [displayColorPicker2, setDisplayColorPicker2] = useState(false);
   const [layout, setLayout] = useState(content.style);
   const currentStyle = content.headerStyle || "classic";
   const [color, setColor] = React.useState<string>("");
   const [textColor, setTextColor] = React.useState<string>("");
+
   const headerStyles = [
     {
       id: "classic",
@@ -59,7 +58,7 @@ export const HeaderSection = ({
     {
       id: "dark",
       label: "Dark",
-      className: color ? "" : "bg-gray-800",
+      className: color ? "" : "text-white bg-gray-800",
       // textColorClass: textColor ? textColor : "text-white",
       preview: "Dark theme with contrasting elements",
     },
@@ -76,18 +75,46 @@ export const HeaderSection = ({
 
   const handleStyleSelect = (styleId: string) => {
     setColor("");
+    setTextColor("");
     onContentChange("headerStyle", styleId);
     setShowStylePicker(false);
   };
 
-  const handleColorChange = (color: any) => {
-    console.log(color);
-    setColor(color.hex);
-  };
-
-  const handleTextColorChange = (textColor: any) => {
-    setTextColor(textColor.hex);
-  };
+  const colorPickerStyle = reactCSS({
+    default: {
+      color: {
+        width: "36px",
+        height: "14px",
+        borderRadius: "2px",
+        background: color,
+      },
+      color2: {
+        width: "36px",
+        height: "14px",
+        borderRadius: "2px",
+        background: textColor,
+      },
+      swatch: {
+        padding: "5px",
+        background: "#fff",
+        borderRadius: "1px",
+        boxShadow: "0 0 0 1px rgba(0,0,0,.1)",
+        display: "inline-block",
+        cursor: "pointer",
+      },
+      popover: {
+        position: "absolute",
+        zIndex: "10",
+      },
+      cover: {
+        position: "fixed",
+        top: "0px",
+        right: "0px",
+        bottom: "0px",
+        left: "0px",
+      },
+    },
+  });
 
   const layoutHandler = (e: any) => {
     content.style = e;
@@ -138,64 +165,52 @@ export const HeaderSection = ({
 
   const EditHeaderColor = () =>
     isEditing && (
-      <Popover>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            className="px-3 py-1 border rounded flex items-center gap-2"
-          >
+      <div className="flex justify-center gap-1">
+        <p>Text Color</p>
+        <div
+          style={colorPickerStyle.swatch}
+          onClick={() => setDisplayColorPicker((prev) => !prev)}
+        >
+          <div style={colorPickerStyle.color} />
+        </div>
+        {displayColorPicker ? (
+          <div style={colorPickerStyle.popover}>
             <div
-              className="w-4 h-4 rounded-sm border"
-              style={{ backgroundColor: color }}
+              style={colorPickerStyle.cover}
+              onClick={() => setDisplayColorPicker(false)}
             />
-            Color
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0 border-none">
-          <ChromePicker
-            color={color}
-            onChange={handleColorChange}
-            styles={{
-              default: {
-                picker: {
-                  boxShadow: "none",
-                },
-              },
-            }}
-          />
-        </PopoverContent>
-      </Popover>
+            <SketchPicker
+              color={color}
+              onChange={(color) => setColor(color.hex)}
+            />
+          </div>
+        ) : null}
+      </div>
     );
 
   const EditTextColor = () =>
     isEditing && (
-      <Popover>
-        <PopoverTrigger asChild>
-          <button
-            type="button"
-            className="px-3 py-1 border rounded flex items-center gap-2"
-          >
+      <div className="flex justify-center gap-1">
+        <p>Text Color</p>
+        <div
+          style={colorPickerStyle.swatch}
+          onClick={() => setDisplayColorPicker2((prev) => !prev)}
+        >
+          <div style={colorPickerStyle.color2} />
+        </div>
+        {displayColorPicker2 ? (
+          <div style={colorPickerStyle.popover}>
             <div
-              className="w-4 h-4 rounded-sm border"
-              style={{ backgroundColor: textColor }}
+              style={colorPickerStyle.cover}
+              onClick={() => setDisplayColorPicker2(false)}
             />
-            Text Color
-          </button>
-        </PopoverTrigger>
-        <PopoverContent className="p-0 border-none">
-          <ChromePicker
-            color={textColor}
-            onChange={handleTextColorChange}
-            styles={{
-              default: {
-                picker: {
-                  boxShadow: "none",
-                },
-              },
-            }}
-          />
-        </PopoverContent>
-      </Popover>
+            <SketchPicker
+              color={textColor}
+              onChange={(textColor) => setTextColor(textColor.hex)}
+            />
+          </div>
+        ) : null}
+      </div>
     );
 
   useEffect(() => {
@@ -257,7 +272,10 @@ export const HeaderSection = ({
             ? "justify-between"
             : ""
         } items-center ${headerStyle.className}`}
-        style={{ background: color, color: textColor }}
+        style={{
+          background: color,
+          color: textColor,
+        }}
       >
         <ShowLogo />
         <div className="flex gap-6">

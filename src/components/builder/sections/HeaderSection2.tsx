@@ -5,50 +5,22 @@
 //   DialogHeader,
 //   DialogTitle,
 // } from "@/components/ui/dialog";
-// import { useState } from "react";
-// import { TipTapEditor } from "../../editor/TipTapEditor";
+// import {
+//   Popover,
+//   PopoverContent,
+//   PopoverTrigger,
+// } from "@/components/ui/popover";
+// import React, { useEffect, useState } from "react";
+// import { ChromePicker } from "react-color";
 // import { MenuItem } from "./MenuItem";
 
 // interface HeaderSectionProps {
 //   content: Record<string, string>;
 //   styles: Record<string, any>;
 //   isEditing: boolean;
-//   onContentChange: (key: string, value: string) => void;
+//   onContentChange: (key: string, value: any) => void;
 //   onStyleChange: (key: string, value: any) => void;
 // }
-
-// const headerStyles = [
-//   {
-//     id: "classic",
-//     label: "Classic",
-//     className: "bg-white border-b",
-//     preview: "Simple and clean header with logo and navigation",
-//   },
-//   {
-//     id: "modern",
-//     label: "Modern",
-//     className: "bg-gradient-to-r from-blue-500 to-purple-500 text-white",
-//     preview: "Gradient background with modern styling",
-//   },
-//   {
-//     id: "minimal",
-//     label: "Minimal",
-//     className: "bg-white border-b",
-//     preview: "Minimalistic design with essential elements",
-//   },
-//   {
-//     id: "dark",
-//     label: "Dark",
-//     className: "bg-gray-800 text-white",
-//     preview: "Dark theme with contrasting elements",
-//   },
-//   {
-//     id: "transparent",
-//     label: "Transparent",
-//     className: "bg-transparent backdrop-blur-sm",
-//     preview: "Transparent background with blur effect",
-//   },
-// ];
 
 // export const HeaderSection = ({
 //   content,
@@ -58,22 +30,77 @@
 //   onStyleChange,
 // }: HeaderSectionProps) => {
 //   const [showStylePicker, setShowStylePicker] = useState(!content.headerStyle);
+//   const [layout, setLayout] = useState(content.style);
 //   const currentStyle = content.headerStyle || "classic";
+//   const [color, setColor] = React.useState<string>("");
+//   const [textColor, setTextColor] = React.useState<string>("");
+//   const headerStyles = [
+//     {
+//       id: "classic",
+//       label: "Classic",
+//       className: color ? "border-b" : "bg-slate-400 border-b",
+//       // textColorClass: textColor ? textColor : "",
+//       preview: "Simple and clean header with logo and navigation",
+//     },
+//     {
+//       id: "modern",
+//       label: "Modern",
+//       className: color ? "" : "bg-gradient-to-r from-blue-500 to-purple-500 ",
+//       // textColorClass: textColor ? textColor : "text-white",
+//       preview: "Gradient background with modern styling",
+//     },
+//     {
+//       id: "minimal",
+//       label: "Minimal",
+//       className: color ? "border-b" : "bg-lime-100",
+//       // textColorClass: textColor ? textColor : "",
+//       preview: "Minimalistic design with essential elements",
+//     },
+//     {
+//       id: "dark",
+//       label: "Dark",
+//       className: color ? "" : "bg-gray-800",
+//       // textColorClass: textColor ? textColor : "text-white",
+//       preview: "Dark theme with contrasting elements",
+//     },
+//     {
+//       id: "transparent",
+//       label: "Transparent",
+//       className: "bg-transparent backdrop-blur-sm",
+//       // textColorClass: textColor ? textColor : "",
+//       preview: "Transparent background with blur effect",
+//     },
+//   ];
 //   const headerStyle =
 //     headerStyles.find((style) => style.id === currentStyle) || headerStyles[0];
-//   const menuItems = ["Home", "About", "Services", "Contact"];
 
 //   const handleStyleSelect = (styleId: string) => {
+//     setColor("");
 //     onContentChange("headerStyle", styleId);
 //     setShowStylePicker(false);
 //   };
 
-//   const Logo = () => (
+//   const handleColorChange = (color: any) => {
+//     console.log(color);
+//     setColor(color.hex);
+//   };
+
+//   const handleTextColorChange = (textColor: any) => {
+//     setTextColor(textColor.hex);
+//   };
+
+//   const layoutHandler = (e: any) => {
+//     content.style = e;
+//     setLayout(content.style);
+//   };
+
+//   const ShowLogo = () => (
 //     <div className="font-bold">
 //       {isEditing ? (
-//         <TipTapEditor
+//         <input
+//           className="rounded-md p-1 text-black"
 //           value={content.logo || "Logo"}
-//           onChange={(value) => onContentChange("logo", value)}
+//           onChange={(e) => onContentChange("logo", e.target.value)}
 //         />
 //       ) : (
 //         <span
@@ -85,102 +112,96 @@
 //     </div>
 //   );
 
-//   const MenuItems = () => (
-//     <>
-//       {menuItems.map((item, i) => (
-//         <div key={item}>
-//           <MenuItem
-//             item={item}
-//             index={i}
-//             isEditing={isEditing}
-//             content={content}
-//             onContentChange={onContentChange}
-//           />
-//         </div>
-//       ))}
-//     </>
-//   );
-
-//   const StylePickerButton = () =>
+//   const EditHeaderLayout = () =>
 //     isEditing && (
-//       <div className="mb-4">
+//       <div className="flex gap-4">
+//         {["Center", "Start", "End", "Between"].map((position) => (
+//           <Button
+//             key={position}
+//             variant="outline"
+//             onClick={() => layoutHandler(position.toLowerCase())}
+//           >
+//             {position}
+//           </Button>
+//         ))}
+//       </div>
+//     );
+
+//   const EditHeaderStyle = () =>
+//     isEditing && (
+//       <div>
 //         <Button variant="destructive" onClick={() => setShowStylePicker(true)}>
 //           Change Header Style
 //         </Button>
 //       </div>
 //     );
 
-//   const renderHeader = () => {
-//     switch (content.style) {
-//       case "modern":
-//         return (
-//           <nav
-//             className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-//             style={styles.background || {}}
+//   const EditHeaderColor = () =>
+//     isEditing && (
+//       <Popover>
+//         <PopoverTrigger asChild>
+//           <button
+//             type="button"
+//             className="px-3 py-1 border rounded flex items-center gap-2"
 //           >
-//             <StylePickerButton />
-//             <Logo />
-//             <div className="flex items-center gap-5">
-//               <MenuItems />
-//             </div>
-//           </nav>
-//         );
-//       case "centered":
-//         return (
-//           <nav
-//             className={`p-6 ${headerStyle.className} flex justify-center gap-5 items-center`}
-//             style={styles.background || {}}
+//             <div
+//               className="w-4 h-4 rounded-sm border"
+//               style={{ backgroundColor: color }}
+//             />
+//             Color
+//           </button>
+//         </PopoverTrigger>
+//         <PopoverContent className="p-0 border-none">
+//           <ChromePicker
+//             color={color}
+//             onChange={handleColorChange}
+//             styles={{
+//               default: {
+//                 picker: {
+//                   boxShadow: "none",
+//                 },
+//               },
+//             }}
+//           />
+//         </PopoverContent>
+//       </Popover>
+//     );
+
+//   const EditTextColor = () =>
+//     isEditing && (
+//       <Popover>
+//         <PopoverTrigger asChild>
+//           <button
+//             type="button"
+//             className="px-3 py-1 border rounded flex items-center gap-2"
 //           >
-//             <StylePickerButton />
-//             <Logo />
-//             <div className="flex items-center gap-5">
-//               <MenuItems />
-//             </div>
-//           </nav>
-//         );
-//       case "minimal":
-//         return (
-//           <nav
-//             className={`p-4 ${headerStyle.className} flex justify-between items-start`}
-//             style={styles.background || {}}
-//           >
-//             <StylePickerButton />
-//             <Logo />
-//             <div className="flex items-center gap-5 text-sm">
-//               <MenuItems />
-//             </div>
-//           </nav>
-//         );
-//       case "dark":
-//         return (
-//           <nav
-//             className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-//             style={styles.background || {}}
-//           >
-//             <StylePickerButton />
-//             <Logo />
-//             <div className="flex items-center gap-5">
-//               <MenuItems />
-//             </div>
-//           </nav>
-//         );
-//       case "transparent":
-//         return (
-//           <nav
-//             className={`p-6 ${headerStyle.className} flex justify-between items-center`}
-//             style={styles.background || {}}
-//           >
-//             <StylePickerButton />
-//             <Logo />
-//             <div className="flex items-center gap-5">
-//               <MenuItems />
-//             </div>
-//           </nav>
-//         );
-//       default:
-//         return null;
-//     }
-//   };
+//             <div
+//               className="w-4 h-4 rounded-sm border"
+//               style={{ backgroundColor: textColor }}
+//             />
+//             Text Color
+//           </button>
+//         </PopoverTrigger>
+//         <PopoverContent className="p-0 border-none">
+//           <ChromePicker
+//             color={textColor}
+//             onChange={handleTextColorChange}
+//             styles={{
+//               default: {
+//                 picker: {
+//                   boxShadow: "none",
+//                 },
+//               },
+//             }}
+//           />
+//         </PopoverContent>
+//       </Popover>
+//     );
+
+//   useEffect(() => {
+//     setLayout(content.style);
+//     console.log(content);
+//   }, [content]);
 
 //   return (
 //     <>
@@ -217,7 +238,42 @@
 //         </DialogContent>
 //       </Dialog>
 
-//       {renderHeader()}
+//       <div className="flex justify-start items-center gap-5 my-4">
+//         <EditHeaderStyle />
+//         <EditHeaderLayout />
+//         <EditHeaderColor />
+//         <EditTextColor />
+//       </div>
+//       {/* <h1>{color}</h1> */}
+//       <nav
+//         className={`flex p-5 gap-5 ${
+//           layout === "start"
+//             ? "justify-start"
+//             : layout === "end"
+//             ? "justify-end"
+//             : layout === "center"
+//             ? "justify-center"
+//             : layout === "between"
+//             ? "justify-between"
+//             : ""
+//         } items-center ${headerStyle.className}`}
+//         style={{ background: color, color: textColor }}
+//       >
+//         <ShowLogo />
+//         <div className="flex gap-6">
+//           {["Home", "About", "Services", "Contact"].map((item, i) => (
+//             <div key={item}>
+//               <MenuItem
+//                 item={item}
+//                 index={i}
+//                 isEditing={isEditing}
+//                 content={content}
+//                 onContentChange={onContentChange}
+//               />
+//             </div>
+//           ))}
+//         </div>
+//       </nav>
 //     </>
 //   );
 // };
