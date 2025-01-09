@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/dialog";
 import React, { useEffect, useState } from "react";
 import { SketchPicker } from "react-color";
+import ImageUploading, { ImageListType } from "react-images-uploading";
 import reactCSS from "reactcss";
 import { MenuItem } from "./MenuItem";
 
@@ -32,6 +33,8 @@ export const HeaderSection = ({
   const currentStyle = content.headerStyle || "classic";
   const [color, setColor] = React.useState<string>("");
   const [textColor, setTextColor] = React.useState<string>("");
+  const [logo, setLogo] = useState([]);
+  // const [logoLink, setLogoLink] = useState(""); // State to capture the link input
 
   const headerStyles = [
     {
@@ -121,20 +124,87 @@ export const HeaderSection = ({
     setLayout(content.style);
   };
 
+  // const handleLinkChange = (event) => {
+  //   setLogoLink(event.target.value); // Update link state as the user types
+  // };
+
+  // const handleSubmitLink = () => {
+  //   setLogoLink(logoLink); // Set the logo state to the input value
+  // };
+
+  const onChange = (
+    imageList: ImageListType,
+    addUpdateIndex: number[] | undefined
+  ) => {
+    // console.log(logo, imageList, addUpdateIndex);
+    setLogo(imageList);
+  };
+
   const ShowLogo = () => (
     <div className="font-bold">
       {isEditing ? (
-        <input
-          className="rounded-md p-1 text-black"
-          value={content.logo || "Logo"}
-          onChange={(e) => onContentChange("logo", e.target.value)}
-        />
+        <ImageUploading multiple={false} value={logo} onChange={onChange}>
+          {({ imageList, onImageUpload, onImageRemove }) => (
+            <div className="flex flex-col gap-2">
+              <div className="upload__image-wrapper flex items-center justify-center gap-2">
+                <button
+                  onClick={onImageUpload}
+                  className="p-2 bg-green-700 text-white border border-white rounded-md"
+                >
+                  Upload
+                </button>
+                {imageList.map((image, index) => (
+                  <div key={index} className="image-item">
+                    <div className="flex justify-center items-center gap-2">
+                      <img
+                        className="rounded-md"
+                        src={image.dataURL}
+                        alt=""
+                        width="50"
+                      />
+                      <button
+                        className="p-2 bg-red-500 border border-white rounded-md"
+                        onClick={() => onImageRemove(index)}
+                      >
+                        X
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* <div className="flex flex-col bg-slate-100 rounded-md p-1">
+                <input
+                  className=""
+                  placeholder="Link"
+                  type="text"
+                  onChange={handleLinkChange}
+                />
+                <button
+                  className="p-2"
+                  value={logoLink}
+                  onClick={handleSubmitLink}
+                >
+                  Submit Link
+                </button>
+              </div> */}
+            </div>
+          )}
+        </ImageUploading>
       ) : (
-        <span
-          dangerouslySetInnerHTML={{
-            __html: content.logo || "Logo",
-          }}
-        />
+        <>
+          {logo && logo.length > 0 && logo[0]?.dataURL ? (
+            <div>
+              <a href={"#"} target="_blank" rel="noopener noreferrer">
+                <img
+                  className="rounded-md"
+                  src={logo[0]?.dataURL}
+                  alt="Logo"
+                  width="50"
+                />
+              </a>
+            </div>
+          ) : null}
+        </>
       )}
     </div>
   );
@@ -166,7 +236,7 @@ export const HeaderSection = ({
   const EditHeaderColor = () =>
     isEditing && (
       <div className="flex justify-center gap-1">
-        <p>Text Color</p>
+        <p>Color</p>
         <div
           style={colorPickerStyle.swatch}
           onClick={() => setDisplayColorPicker((prev) => !prev)}
@@ -215,7 +285,8 @@ export const HeaderSection = ({
 
   useEffect(() => {
     setLayout(content.style);
-    console.log(content);
+    // console.log(content);
+    // console.log(logoLink);
   }, [content]);
 
   return (
