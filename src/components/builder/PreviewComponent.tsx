@@ -57,6 +57,8 @@ export const PreviewComponent = ({
   drag(drop(ref));
 
   const handleContentChange = (key: string, value: string) => {
+    console.log(key, value);
+
     setContent((prev) => ({ ...prev, [key]: value }));
     component.content = { ...content, [key]: value };
   };

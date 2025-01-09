@@ -1,6 +1,3 @@
-import { Input } from "@/components/ui/input";
-import { TipTapEditor } from "../../editor/TipTapEditor";
-
 interface MenuItemProps {
   item: string;
   index: number;
@@ -18,12 +15,14 @@ export const MenuItem = ({
 }: MenuItemProps) => (
   <div>
     {isEditing ? (
-      <div className="space-y-2">
-        <TipTapEditor
+      <div className="flex flex-col justify-end gap-2 text-black">
+        <input
+          className="rounded-md p-1"
           value={content[`menuItem${index}`] || item}
-          onChange={(value) => onContentChange(`menuItem${index}`, value)}
+          onChange={(e) => onContentChange(`menuItem${index}`, e.target.value)}
         />
-        <Input
+        <input
+          className="rounded-md p-1"
           type="url"
           placeholder="URL"
           value={content[`menuUrl${index}`] || ""}

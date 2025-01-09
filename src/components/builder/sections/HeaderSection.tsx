@@ -5,61 +5,22 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-// import {
-//   Popover,
-//   PopoverContent,
-//   PopoverTrigger,
-// } from "@/components/ui/popover";
-import { useEffect, useState } from "react";
-// import { ChromePicker } from "react-color";
-import { TipTapEditor } from "../../editor/TipTapEditor";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import React, { useEffect, useState } from "react";
+import { ChromePicker } from "react-color";
 import { MenuItem } from "./MenuItem";
 
 interface HeaderSectionProps {
   content: Record<string, string>;
   styles: Record<string, any>;
   isEditing: boolean;
-  onContentChange: (key: string, value: string) => void;
+  onContentChange: (key: string, value: any) => void;
   onStyleChange: (key: string, value: any) => void;
 }
-
-const headerStyles = [
-  {
-    id: "classic",
-    label: "Classic",
-    // className: "",
-    className: "bg-slate-400 border-b",
-    preview: "Simple and clean header with logo and navigation",
-  },
-  {
-    id: "modern",
-    label: "Modern",
-    // className: "",
-    className: "bg-gradient-to-r from-blue-500 to-purple-500 text-white",
-    preview: "Gradient background with modern styling",
-  },
-  {
-    id: "minimal",
-    label: "Minimal",
-    // className: "",
-    className: "bg-lime-100 border-b",
-    preview: "Minimalistic design with essential elements",
-  },
-  {
-    id: "dark",
-    label: "Dark",
-    // className: "",
-    className: "bg-gray-800 text-white",
-    preview: "Dark theme with contrasting elements",
-  },
-  {
-    id: "transparent",
-    label: "Transparent",
-    // className: "",
-    className: "bg-transparent backdrop-blur-sm",
-    preview: "Transparent background with blur effect",
-  },
-];
 
 export const HeaderSection = ({
   content,
@@ -71,20 +32,62 @@ export const HeaderSection = ({
   const [showStylePicker, setShowStylePicker] = useState(!content.headerStyle);
   const [layout, setLayout] = useState(content.style);
   const currentStyle = content.headerStyle || "classic";
-  // const [color, setColor] = React.useState("#000000");
+  const [color, setColor] = React.useState<string>("");
+  const [textColor, setTextColor] = React.useState<string>("");
+  const headerStyles = [
+    {
+      id: "classic",
+      label: "Classic",
+      className: color ? "border-b" : "bg-slate-400 border-b",
+      // textColorClass: textColor ? textColor : "",
+      preview: "Simple and clean header with logo and navigation",
+    },
+    {
+      id: "modern",
+      label: "Modern",
+      className: color ? "" : "bg-gradient-to-r from-blue-500 to-purple-500 ",
+      // textColorClass: textColor ? textColor : "text-white",
+      preview: "Gradient background with modern styling",
+    },
+    {
+      id: "minimal",
+      label: "Minimal",
+      className: color ? "border-b" : "bg-lime-100",
+      // textColorClass: textColor ? textColor : "",
+      preview: "Minimalistic design with essential elements",
+    },
+    {
+      id: "dark",
+      label: "Dark",
+      className: color ? "" : "bg-gray-800",
+      // textColorClass: textColor ? textColor : "text-white",
+      preview: "Dark theme with contrasting elements",
+    },
+    {
+      id: "transparent",
+      label: "Transparent",
+      className: "bg-transparent backdrop-blur-sm",
+      // textColorClass: textColor ? textColor : "",
+      preview: "Transparent background with blur effect",
+    },
+  ];
   const headerStyle =
     headerStyles.find((style) => style.id === currentStyle) || headerStyles[0];
 
   const handleStyleSelect = (styleId: string) => {
+    setColor("");
     onContentChange("headerStyle", styleId);
     setShowStylePicker(false);
   };
 
-  // const handleColorChange = (color: any) => {
-  //   setColor(color.hex);
-  //   console.log(color.hex);
-  //   // onStyleChange({ color: color.hex });
-  // };
+  const handleColorChange = (color: any) => {
+    console.log(color);
+    setColor(color.hex);
+  };
+
+  const handleTextColorChange = (textColor: any) => {
+    setTextColor(textColor.hex);
+  };
 
   const layoutHandler = (e: any) => {
     content.style = e;
@@ -94,9 +97,10 @@ export const HeaderSection = ({
   const ShowLogo = () => (
     <div className="font-bold">
       {isEditing ? (
-        <TipTapEditor
+        <input
+          className="rounded-md p-1 text-black"
           value={content.logo || "Logo"}
-          onChange={(value) => onContentChange("logo", value)}
+          onChange={(e) => onContentChange("logo", e.target.value)}
         />
       ) : (
         <span
@@ -132,36 +136,67 @@ export const HeaderSection = ({
       </div>
     );
 
-  // const EditHeaderColor = () =>
-  //   isEditing && (
-  //     <Popover>
-  //       <PopoverTrigger asChild>
-  //         <button
-  //           type="button"
-  //           className="px-3 py-1 border rounded flex items-center gap-2"
-  //         >
-  //           <div
-  //             className="w-4 h-4 rounded-sm border"
-  //             style={{ backgroundColor: color }}
-  //           />
-  //           Color
-  //         </button>
-  //       </PopoverTrigger>
-  //       <PopoverContent className="p-0 border-none">
-  //         <ChromePicker
-  //           color={color}
-  //           onChange={handleColorChange}
-  //           styles={{
-  //             default: {
-  //               picker: {
-  //                 boxShadow: "none",
-  //               },
-  //             },
-  //           }}
-  //         />
-  //       </PopoverContent>
-  //     </Popover>
-  //   );
+  const EditHeaderColor = () =>
+    isEditing && (
+      <Popover>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className="px-3 py-1 border rounded flex items-center gap-2"
+          >
+            <div
+              className="w-4 h-4 rounded-sm border"
+              style={{ backgroundColor: color }}
+            />
+            Color
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0 border-none">
+          <ChromePicker
+            color={color}
+            onChange={handleColorChange}
+            styles={{
+              default: {
+                picker: {
+                  boxShadow: "none",
+                },
+              },
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+    );
+
+  const EditTextColor = () =>
+    isEditing && (
+      <Popover>
+        <PopoverTrigger asChild>
+          <button
+            type="button"
+            className="px-3 py-1 border rounded flex items-center gap-2"
+          >
+            <div
+              className="w-4 h-4 rounded-sm border"
+              style={{ backgroundColor: textColor }}
+            />
+            Text Color
+          </button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0 border-none">
+          <ChromePicker
+            color={textColor}
+            onChange={handleTextColorChange}
+            styles={{
+              default: {
+                picker: {
+                  boxShadow: "none",
+                },
+              },
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+    );
 
   useEffect(() => {
     setLayout(content.style);
@@ -206,7 +241,8 @@ export const HeaderSection = ({
       <div className="flex justify-start items-center gap-5 my-4">
         <EditHeaderStyle />
         <EditHeaderLayout />
-        {/* <EditHeaderColor /> */}
+        <EditHeaderColor />
+        <EditTextColor />
       </div>
       {/* <h1>{color}</h1> */}
       <nav
@@ -221,7 +257,7 @@ export const HeaderSection = ({
             ? "justify-between"
             : ""
         } items-center ${headerStyle.className}`}
-        style={styles.background || {}}
+        style={{ background: color, color: textColor }}
       >
         <ShowLogo />
         <div className="flex gap-6">
